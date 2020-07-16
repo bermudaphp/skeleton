@@ -6,14 +6,12 @@ declare(strict_types=1);
 
 error_reporting(E_ALL);
 
-if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
+if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__)
+{
     return false;
 }
 
 define('APP_ROOT', dirname(__DIR__));
-
-chdir(APP_ROOT);
-
 require APP_ROOT . '/vendor/autoload.php';
 
 (function()
