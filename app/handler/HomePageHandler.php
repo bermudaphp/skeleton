@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App;
+namespace App\Handler;
 
 
 use function Bermuda\view;
