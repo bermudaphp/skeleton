@@ -8,7 +8,6 @@ use Bermuda\Router\RouterInterface;
 /**
  * @var AppInterface $app
  */
-
-
 $routes = $app->get(RouterInterface::class)->getRoutes();
-$routes->get('home', '/', \App\HomePageHandler::class);
+
+$routes->get('home', '/', \App\Handler\HomePageHandler::class);
