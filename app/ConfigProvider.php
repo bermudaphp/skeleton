@@ -10,11 +10,11 @@ namespace App;
  */
 class ConfigProvider
 {
-    public const dependecies = 'dependencies';
+    public const dependencies = 'dependencies';
     public const factories = 'factories';
     public const invokables = 'invokables';
     public const autowires = 'autowires';
-    public const aliases 'aliases';
+    public const aliases = 'aliases';
     public const delegators = 'delegators';
     public const services = 'services';
     
@@ -42,7 +42,7 @@ class ConfigProvider
      * Factory classes must be instantiable without arguments, and callable once instantiated (i.e., implement the __invoke() method).
      * @return array
      */
-    protected functions getFactories(): array
+    protected function getFactories(): array
     {
         return [];
     }
@@ -53,7 +53,7 @@ class ConfigProvider
      * if they are not, the key is treated as an alias. It could also be an array of services.
      * @return array
      */
-    protected functions getInvokables(): array
+    protected function getInvokables(): array
     {
         return [];
     }
@@ -64,7 +64,7 @@ class ConfigProvider
      * Any aliases needed should be created in the aliases configuration
      * @return array
      */
-    protected functions getAutowires(): array
+    protected function getAutowires(): array
     {
         return [];
     }
@@ -73,7 +73,7 @@ class ConfigProvider
      * An associative array that maps an alias to a service name (or another alias).
      * @return array
      */
-    protected functions getAliases(): array
+    protected function getAliases(): array
     {
         return [];
     }
@@ -82,7 +82,7 @@ class ConfigProvider
      * An associative array that maps service names to lists of delegator factory keys
      * @return array
      */
-    protected functions getDelegators(): array
+    protected function getDelegators(): array
     {
         return [];
     }
@@ -91,7 +91,7 @@ class ConfigProvider
      * An associative array that maps a key to a specific service instance or service name.
      * @return array
      */
-    protected functions getServices(): array
+    protected function getServices(): array
     {
         return [];
     }
