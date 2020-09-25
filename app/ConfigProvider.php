@@ -21,7 +21,8 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
-            self::dependencies => $this->getDependencies()
+            'app' => ['version' => '1.0'],
+            self::dependencies => $this->getDependencies(),
         ];
     }
     
