@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 
-use function App\response_write_html;
+use function Bermuda\response_write_html;
 
 
 /**
