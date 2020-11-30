@@ -1,8 +1,6 @@
 <?php
 
-
 declare(strict_types=1);
-
 
 error_reporting(E_ALL);
 
@@ -18,8 +16,16 @@ require APP_ROOT . '/vendor/autoload.php';
 {
     $app = (new \Bermuda\App\AppFactory())(require APP_ROOT . '/config/container.php');
 
-    require APP_ROOT . '/config/routes.php';
-    require APP_ROOT . '/config/pipeline.php';
+    if (PHP_SAPI === 'cli')
+    {
+        require APP_ROOT . '/config/commands.php';
+    }
+
+    else
+    {
+        require APP_ROOT . '/config/routes.php';
+        require APP_ROOT . '/config/pipeline.php';
+    }
 
     $app->run();
 })();
