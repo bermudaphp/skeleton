@@ -32,7 +32,7 @@ final class DisplaysAppVersionCommand implements CommandInterface
      */
     public function getName(): string
     {
-        return 'version';
+        return 'v';
     }
 
     /**
