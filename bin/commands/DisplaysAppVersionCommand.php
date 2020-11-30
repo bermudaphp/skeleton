@@ -16,7 +16,7 @@ final class DisplaysAppVersionCommand implements CommandInterface
 {
     private AppInterface $app;
 
-    public function __construct($app)
+    public function __construct(AppInterface $app)
     {
         $this->app = $app;
     }
