@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 
 /**
- * Class VersionCommand
+ * Class DisplaysAppVersionCommand
  * @package App\Console\Commands
  */
 final class DisplaysAppVersionCommand implements CommandInterface
@@ -40,6 +40,6 @@ final class DisplaysAppVersionCommand implements CommandInterface
      */
     public function getDescription(): string
     {
-        return 'Displays app current version';
+        return 'Displays application current version';
     }
 }
