@@ -14,7 +14,8 @@ require APP_ROOT . '/vendor/autoload.php';
 
 (function()
 {
-    $app = (new \Bermuda\App\AppFactory())(require APP_ROOT . '/config/container.php');
+    $app = (require APP_ROOT . '/config/container.php')
+        ->get(Bermuda\App\AppInterface::class);
 
     if (PHP_SAPI === 'cli')
     {
