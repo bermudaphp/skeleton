@@ -21,17 +21,13 @@ $aggregate = static function(callable ... $providers) use ($cacheConfig): array
 };
 
 return $aggregate(new ArrayProvider($cacheConfig),
+    new \App\ConfigProvider(),
     new \Bermuda\RequestHandlerRunner\ConfigProvider(),
     new \Bermuda\Router\ConfigProvider(),
     new \Bermuda\Pipeline\ConfigProvider(),
     new \Bermuda\Templater\ConfigProvider(),
     new \Bermuda\MiddlewareFactory\ConfigProvider(),
     new \Bermuda\ErrorHandler\ConfigProvider(),
-    new \App\ConfigProvider(),
     new PhpFileProvider(APP_ROOT  . '/config/autoload/{{,*.}global,{,*.}local}.php'),
     new PhpFileProvider(APP_ROOT  . '/config/development.config.php')
 );
-
-
-
-
