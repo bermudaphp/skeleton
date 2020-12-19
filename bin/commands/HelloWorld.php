@@ -17,7 +17,7 @@ final class HelloWorld implements CommandInterface
 {
     public function __invoke(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('Hello wordl!');
+        $output->writeln('Hello world!');
         return self::success;
     }
 
