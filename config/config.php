@@ -27,6 +27,7 @@ return $aggregate(new ArrayProvider($cacheConfig),
     new \Bermuda\Templater\ConfigProvider(),
     new \Bermuda\MiddlewareFactory\ConfigProvider(),
     new \Bermuda\ErrorHandler\ConfigProvider(),
+    new \App\ConfigProvider(),
     new PhpFileProvider(APP_ROOT  . '/config/autoload/{{,*.}global,{,*.}local}.php'),
     new PhpFileProvider(APP_ROOT  . '/config/development.config.php')
 );
