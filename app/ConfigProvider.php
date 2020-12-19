@@ -8,7 +8,6 @@ use Bermuda\App\AppInterface;
 use Bermuda\App\Boot\Bootstrapper;
 use Bermuda\App\Boot\RouteBootstrapper;
 use Bermuda\App\Boot\RouterBootstrapper;
-use Bermuda\App\Boot\BootstrapperInterface;
 use Bermuda\Provider\ConfigProvider as BermudaConfigProvider;
 
 
@@ -27,7 +26,7 @@ final class ConfigProvider extends BermudaConfigProvider
     {
         return [
             AppInterface::class => AppFactory::class,
-            BootstrapperInterface::class => static function(ContainerInterface $container): Bootstrapper
+            Bootstrapper::class => static function(ContainerInterface $container): Bootstrapper
             {
                 return Bootstrapper::makeOf([
                     new RouterBootstrapper,
