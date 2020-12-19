@@ -5,7 +5,7 @@ return [
         [
             'ext' => 'phtml',
             'templates' => [
-                'app' => APP_ROOT . '/templates/app'
+                'app' => APP_ROOT . '\templates\app'
             ],
             'functions' => []
         ]
