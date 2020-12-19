@@ -2,5 +2,6 @@
 
 return [
     'app_url' => '',
-    'app_version' => '1.0.0'
+    'app_name' => 'Bermuda',
+    'app_version' => '1.0.0',
 ];
