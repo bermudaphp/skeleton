@@ -10,23 +10,15 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__)
 }
 
 define('APP_ROOT', dirname(__DIR__));
-require APP_ROOT . '/vendor/autoload.php';
+require APP_ROOT . '\vendor\autoload.php';
 
 (function()
 {
-    $app = (require APP_ROOT . '/config/container.php')
+    $app = (require APP_ROOT . '\config\container.php')
         ->get(Bermuda\App\AppInterface::class);
 
-    if (PHP_SAPI === 'cli')
-    {
-        require APP_ROOT . '/config/commands.php';
-    }
-
-    else
-    {
-        require APP_ROOT . '/config/routes.php';
-        require APP_ROOT . '/config/pipeline.php';
-    }
+    ($app->get(Bermuda\App\Bootstrapper::class))
+        ->boot($app);
 
     $app->run();
 })();
