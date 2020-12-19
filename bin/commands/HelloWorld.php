@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 
 /**
- * Class DisplaysAppVersionCommand
+ * Class HelloWorld
  * @package App\Console\Commands
  */
 final class HelloWorld implements CommandInterface
