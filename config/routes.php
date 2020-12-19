@@ -1,13 +1,10 @@
 <?php
 
-
-use Bermuda\App\AppInterface;
-use Bermuda\Router\RouterInterface;
+use Bermuda\Router\RouteMap;
 
 
 /**
- * @var AppInterface $app
+ * @var RouteMap $routes
  */
-$routes = $app->get(RouterInterface::class)->getRoutes();
 
 $routes->get('home', '/', \App\Handler\HomePageHandler::class);
