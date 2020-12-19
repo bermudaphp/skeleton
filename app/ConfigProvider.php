@@ -33,6 +33,6 @@ final class ConfigProvider extends BermudaConfigProvider
                     new PipelineBootstrapper,
                 ]);
             },
-        ];
+       ];
     }
 }
