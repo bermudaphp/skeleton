@@ -6,8 +6,8 @@ namespace App;
 use Bermuda\App\AppFactory;
 use Bermuda\App\AppInterface;
 use Bermuda\App\Boot\Bootstrapper;
-use Bermuda\App\Boot\RouteBootstrapper;
 use Bermuda\App\Boot\RouterBootstrapper;
+use Bermuda\App\Boot\PipelineBootstrapper;
 use Bermuda\Provider\ConfigProvider as BermudaConfigProvider;
 
 
