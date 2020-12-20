@@ -4,8 +4,6 @@ namespace App\Handler;
 
 
 use function Bermuda\view;
-
-
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -15,7 +13,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * Class HomePageHandler
  * @package App\Handler
  */
-class HomePageHandler implements RequestHandlerInterface
+final class HomePageHandler implements RequestHandlerInterface
 {
     /**
      * @inheritDoc
