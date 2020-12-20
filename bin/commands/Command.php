@@ -20,7 +20,7 @@ abstract class Command extends SymfonyCommand implements CommandInterface
      */
     public function getName(): string
     {
-        return parent::getName();
+        return (string) parent::getName();
     }
 
     /**
