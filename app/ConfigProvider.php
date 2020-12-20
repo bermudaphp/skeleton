@@ -5,7 +5,9 @@ namespace App;
 
 use Bermuda\App\AppFactory;
 use Bermuda\App\AppInterface;
+use App\Handler\HomePageHandler;
 use Bermuda\App\Boot\Bootstrapper;
+use App\Factory\HomePageHandlerFactory;
 use Bermuda\App\Boot\RouterBootstrapper;
 use Bermuda\App\Boot\PipelineBootstrapper;
 use Bermuda\Provider\ConfigProvider as BermudaConfigProvider;
@@ -26,6 +28,7 @@ final class ConfigProvider extends BermudaConfigProvider
     {
         return [
             AppInterface::class => AppFactory::class,
+            HomePageHandler::class => HomePageHandlerFactory::class,
             Bootstrapper::class => static function(ContainerInterface $container): Bootstrapper
             {
                 return Bootstrapper::makeOf([
