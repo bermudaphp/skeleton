@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Handler;
 
 
@@ -14,7 +13,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class HomePageHandler
- * @package App
+ * @package App\Handler
  */
 class HomePageHandler implements RequestHandlerInterface
 {
