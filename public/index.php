@@ -17,7 +17,7 @@ require APP_ROOT . '\vendor\autoload.php';
     $app = (require APP_ROOT . '\config\container.php')
         ->get(Bermuda\App\AppInterface::class);
 
-    ($app->get(Bermuda\App\Bootstrapper::class))
+    ($app->get(Bermuda\App\Boot\Bootstrapper::class))
         ->boot($app);
 
     $app->run();
