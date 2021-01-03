@@ -12,13 +12,13 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__)
 define('APP_ROOT', dirname(__DIR__));
 require APP_ROOT . '\vendor\autoload.php';
 
-(static function()
+(static function(\Psr\Container\ContainerInterface $container)
 {
-    $app = (require APP_ROOT . '\config\container.php')
-        ->get(Bermuda\App\AppInterface::class);
-
-    ($app->get(Bermuda\App\Boot\Bootstrapper::class))
+    ($app = $container->get(Bermuda\App\AppInterface::class))
+    ->get(Bermuda\App\Boot\Bootstrapper::class)
         ->boot($app);
 
     $app->run();
-})();
+})
+
+(require APP_ROOT . '\config\container.php');
