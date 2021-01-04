@@ -1,33 +1,45 @@
 <?php
 
-
 declare(strict_types=1);
 
 
-use Laminas\ConfigAggregator\ArrayProvider;
-use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
 
 
-// To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
-// `config/autoload/local.php`.
-$cacheConfig = [
-    'config_cache_path' => 'data/cache/config-cache.php',
-];
+Config::$useCache = true;
+Config::$cacheFile = APP_ROOT . '\config\cached-config.php';
 
-$aggregate = static function(callable ... $providers) use ($cacheConfig): array
-{
-    return (new ConfigAggregator($providers, $cacheConfig['config_cache_path']))->getMergedConfig();
-};
-
-return $aggregate(new ArrayProvider($cacheConfig),
-    new \App\ConfigProvider(),
-    new \Bermuda\RequestHandlerRunner\ConfigProvider(),
-    new \Bermuda\Router\ConfigProvider(),
-    new \Bermuda\Pipeline\ConfigProvider(),
-    new \Bermuda\Templater\ConfigProvider(),
-    new \Bermuda\MiddlewareFactory\ConfigProvider(),
-    new \Bermuda\ErrorHandler\ConfigProvider(),
+return Config::merge(
+    new Bermuda\RequestHandlerRunner\ConfigProvider(),
+    new Bermuda\Router\ConfigProvider(),
+    new Bermuda\Pipeline\ConfigProvider(),
+    new Bermuda\Templater\ConfigProvider(),
+    new Bermuda\MiddlewareFactory\ConfigProvider(),
+    new Bermuda\ErrorHandler\ConfigProvider(),
+    
     new PhpFileProvider(APP_ROOT  . '/config/autoload/{{,*.}global,{,*.}local}.php'),
-    new PhpFileProvider(APP_ROOT  . '/config/development.config.php')
+    new PhpFileProvider(APP_ROOT  . '/config/development.config.php'),
+    // App config provider
+    new class extends \Bermuda\Config\ConfigProvider
+    {
+        /**
+         * An associative array that maps a service name to a factory class name, or any callable.
+         * Factory classes must be instantiable without arguments, and callable once instantiated (i.e., implement the __invoke() method).
+         * @return array
+         */
+        protected function getFactories(): array
+        {
+            return [
+                AppInterface::class => AppFactory::class,
+                Bootstrapper::class => static function(ContainerInterface $container): Bootstrapper
+                {
+                    return Bootstrapper::makeOf([
+                        new RouterBootstrapper(),
+                        new PipelineBootstrapper(),
+                    ]);
+                },
+                App\Handler\HomePageHandler::class => App\Handler\HandlerFactory::class
+            ];
+        }
+    },
 );
