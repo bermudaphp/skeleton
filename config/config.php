@@ -38,7 +38,7 @@ return Config::merge(
                         new PipelineBootstrapper(),
                     ]);
                 },
-                App\Handler\HomePageHandler::class => App\Handler\HandlerFactory::class
+                App\Handler\HomePageHandler::class => App\Factory\HomePageHandlerFactory::class
             ];
         }
     },
