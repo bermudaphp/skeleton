@@ -19,6 +19,7 @@ return Config::merge(
     
     new PhpFileProvider(APP_ROOT  . '/config/autoload/{{,*.}global,{,*.}local}.php'),
     new PhpFileProvider(APP_ROOT  . '/config/development.config.php'),
+    
     // App config provider
     new class extends \Bermuda\Config\ConfigProvider
     {
@@ -39,7 +40,7 @@ return Config::merge(
                     ]);
                 },
                 App\Handler\HomePageHandler::class => App\Factory\HomePageHandlerFactory::class
-            ];
-        }
+           ];
+       }
     },
 );
