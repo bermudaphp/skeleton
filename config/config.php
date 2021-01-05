@@ -5,8 +5,7 @@ declare(strict_types=1);
 use Bermuda\Config\Config;
 use Laminas\ConfigAggregator\PhpFileProvider;
 
-
-Config::$useCache = false;
+Config::devMode = true;
 Config::$cacheFile = APP_ROOT . '\config\cached-config.php';
 
 return Config::merge(
