@@ -5,7 +5,8 @@ return [
         [
             'ext' => 'phtml',
             'templates' => [
-                'app' => APP_ROOT . '\templates\app'
+                'app' => ($path = APP_ROOT . '\templates\\') . 'app',
+                'errors' => $path . 'errors',
             ],
             'functions' => []
         ]
