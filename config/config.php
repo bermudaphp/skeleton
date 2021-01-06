@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Bermuda\Config\Config;
 use Laminas\ConfigAggregator\PhpFileProvider;
 
-Config::devMode = true;
+Config::$devMode = true;
 Config::$cacheFile = APP_ROOT . '\config\cached-config.php';
 
 return Config::merge(
@@ -30,15 +30,15 @@ return Config::merge(
         protected function getFactories(): array
         {
             return [
-                AppInterface::class => AppFactory::class,
-                Bootstrapper::class => static function(ContainerInterface $container): Bootstrapper
+                \Bermuda\App\AppInterface::class => \Bermuda\App\AppFactory::class,
+                \Bermuda\App\Boot\Bootstrapper::class => static function(\Psr\Container\ContainerInterface $container): \Bermuda\App\Boot\Bootstrapper
                 {
-                    return Bootstrapper::makeOf([
-                        new RouterBootstrapper(),
-                        new PipelineBootstrapper(),
+                    return \Bermuda\App\Boot\Bootstrapper::makeOf([
+                        new \Bermuda\App\Boot\RouterBootstrapper(),
+                        new \Bermuda\App\Boot\PipelineBootstrapper(),
                     ]);
                 },
-                App\Handler\HomePageHandler::class => App\Factory\HomePageHandlerFactory::class
+                \App\Handler\HomePageHandler::class => \App\Factory\HomePageHandlerFactory::class
            ];
        }
     },
