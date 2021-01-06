@@ -1,13 +1,15 @@
 <?php
 
+use Bermuda\Templater\RendererFactory;
+
 return [
-    'renderer' =>
+    RendererFactory::configKey => [
+        RendererFactory::configExtKey => 'phtml', 
+        RendererFactory::configTemplatesFoldersKey =>
         [
-            'ext' => 'phtml',
-            'templates' => [
-                'app' => ($path = APP_ROOT . '\templates\\') . 'app',
-                'errors' => $path . 'errors',
-            ],
-            'functions' => []
-        ]
+            'app' => ($path = APP_ROOT . '\templates\\') . 'app',
+            'errors' => $path . 'errors',
+        ], 
+        RendererFactory::configExtendersKey => ['urlFor' => '\Bermuda\urlFor']
+   ]
 ];
