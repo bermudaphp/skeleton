@@ -33,7 +33,6 @@ final class CreateHandler extends Command
     protected function configure()
     {
         $this->addArgument('classname', InputArgument::REQUIRED);
-        $this->addArgument('template', InputArgument::OPTIONAL);
     }
 
     /**
