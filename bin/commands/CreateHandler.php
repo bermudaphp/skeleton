@@ -12,15 +12,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class CreateHandler extends Command
 {
-    protected static $defaultName = 'create::handler';
+    protected static $defaultName = 'create:handler';
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         list($namespace, $classname) = $this->splitClassname($input->getArgument('classname'));
         $filename = APP_ROOT . '\app\Handler' . $namespace. '\\' . $classname . '.php';
 
         $handlerCode = $this->getCode();
-        $handlerCode = str_replace([':namespace', ':classname', ':template'], [
-            $namespace, $classname, $input->getArgument('template') ?? ''
+        $handlerCode = str_replace([':namespace', ':classname'], [
+            $namespace, $classname
         ], $handlerCode);
 
         file_put_contents($filename, $handlerCode);
@@ -56,7 +56,6 @@ namespace App\\Handler:namespace;
 use Psr\\Http\\Message\\ResponseInterface;
 use Psr\\Http\Message\\ServerRequestInterface;
 use Psr\\Http\\Server\\RequestHandlerInterface;
-use function Bermuda\\view;
 
 /**
  * Class :classname
