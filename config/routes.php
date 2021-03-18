@@ -2,7 +2,6 @@
 
 use Bermuda\Router\RouteMap;
 
-
 /**
  * @var RouteMap $routes
  */
