@@ -2,10 +2,8 @@
 
 namespace App\Factory;
 
-
 use App\Handler\HomePageHandler;
 use Psr\Container\ContainerInterface;
-
 
 /**
  * Class HomePageHandlerFactory
