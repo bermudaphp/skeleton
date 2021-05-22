@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * @var \Bermuda\App\AppInterface $app
  */
