@@ -12,4 +12,8 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__)
 define('APP_ROOT', dirname(__DIR__));
 require APP_ROOT . '\vendor\autoload.php';
 
-call_user_func('Bermuda\App\Runner::run', require APP_ROOT . '\config\container.php');
+(static function (\Psr\Container\ContainerInterface $container): void
+{
+    \Bermuda\App\Runner::run($container);
+})
+(require APP_ROOT . '\config\container.php');
