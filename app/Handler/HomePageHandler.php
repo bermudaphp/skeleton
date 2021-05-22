@@ -2,12 +2,10 @@
 
 namespace App\Handler;
 
-
 use function Bermuda\view;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
-
 
 /**
  * Class HomePageHandler
