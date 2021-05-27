@@ -14,6 +14,15 @@ require APP_ROOT . '\vendor\autoload.php';
 
 (static function (\Psr\Container\ContainerInterface $container): void
 {
-    \Bermuda\App\Runner::run($container);
+    $app = Bermuda\App\AppFactory::make($container);
+    
+    try {
+        $app->run();
+    }
+    
+    catch(\Throwable $e)
+    {
+        $app->handleException($e);
+    }
 })
 (require APP_ROOT . '\config\container.php');
