@@ -25,10 +25,17 @@ final class CreateHandler extends Command
             $input->getArgument('classname')
         );
 
-        $filename = $this->getFilename($classname, $namespace);
+        $dir = $this->getDirname($namespace);
+
+        if (!$this->directoryExists($dir))
+        {
+            $this->mkDir($dir);
+        }
+
+        $filename = $this->getFilename($dir, $classname);
         $handlerCode = $this->getCode($classname, $namespace);
 
-        file_put_contents($filename, $handlerCode);
+        $this->writeFile($filename, $handlerCode);
 
         $output->writeln('App\Handler\\' . $input->getArgument('classname') . ' successfully created!');
 
@@ -43,6 +50,27 @@ final class CreateHandler extends Command
     protected function configure()
     {
         $this->addArgument('classname', InputArgument::REQUIRED);
+    }
+
+    private function directoryExists(string $dir): bool
+    {
+        return is_dir($dir);
+    }
+
+    private function mkDir(string $dir): void
+    {
+        if (!mkdir($dir))
+        {
+            throw new \RuntimeException('Failed to create directory: ' . $dir);
+        };
+    }
+
+    private function writeFile(string $filename, string $content)
+    {
+        if (file_put_contents($filename, $content) === false)
+        {
+            throw new \RuntimeException('Failed to write file: ' . $filename);
+        }
     }
 
     private function getCode(string $classname, ?string $namespace = null): string
@@ -78,8 +106,14 @@ final class CreateHandler extends Command
             ->generate();
     }
 
-    private function getFilename(string $classname, ?string $namespace = null): string
+    private function getDirname(?string $namespace = null): string
     {
-        return APP_ROOT . '\app\Handler' . $namespace . '\\' . $classname . '.php';
+        !$namespace ?: $namespace = '\\' . $namespace;
+        return APP_ROOT . '\app\Handler' . $namespace . '\\';
+    }
+
+    private function getFilename(string $dirname, string $classname): string
+    {
+        return $dirname . $classname . '.php';
     }
 }
