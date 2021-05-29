@@ -31,14 +31,23 @@ return Config::merge(
         {
             return [
                 \Bermuda\App\AppInterface::class => \Bermuda\App\AppFactory::class,
-                \Bermuda\App\Boot\BootstrapperInterface::class => static function(\Psr\Container\ContainerInterface $container): \Bermuda\App\Boot\Bootstrapper 
+                \Bermuda\App\Boot\BootstrapperInterface::class => static function(\Psr\Container\ContainerInterface $container): \Bermuda\App\Boot\Bootstrapper
                 {
                     return \Bermuda\App\Boot\Bootstrapper::makeOf([
                         new \Bermuda\App\Boot\RouterBootstrapper(),
                         new \Bermuda\App\Boot\PipelineBootstrapper(),
+                        new \Bermuda\App\Boot\ErrorHandlerBootstrapper([
+                            \Bermuda\ErrorHandler\LogErrorListener::class
+                        ])
                     ]);
                 },
-                \App\Handler\HomePageHandler::class => \App\Factory\HomePageHandlerFactory::class
+                \Psr\Log\LoggerInterface::class => static function(\Psr\Container\ContainerInterface $container)
+                {
+                    return (new \Monolog\Logger('MonologLogger'))->pushHandler(
+                        new \Monolog\Handler\StreamHandler(APP_ROOT . '\logs\app.log')
+                    );
+                },
+                \App\Handler\HomePageHandler::class => \App\Factory\HomePageHandlerFactory::class,
            ];
        }
     },
