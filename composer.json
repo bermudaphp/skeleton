@@ -10,7 +10,7 @@
         "bermudaphp/app": "^2.1.2",
         "bermudaphp/config": "^1.0",
         "bermudaphp/http": "^1.0",
-        "nyholm/psr7": "^1.4.0",
+        "nyholm/psr7": "^1.4.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.1",
