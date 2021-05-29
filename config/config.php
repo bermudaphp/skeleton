@@ -9,7 +9,7 @@ Config::$devMode = true;
 Config::$cacheFile = APP_ROOT . '\config\cached-config.php';
 
 return Config::merge(
-    new Bermuda\RequestHandlerRunner\ConfigProvider(),
+    new Bermuda\PSR7ServerFactory\ConfigProvider(),
     new Bermuda\Router\ConfigProvider(),
     new Bermuda\Pipeline\ConfigProvider(),
     new Bermuda\Templater\ConfigProvider(),
@@ -31,13 +31,11 @@ return Config::merge(
         {
             return [
                 \Bermuda\App\AppInterface::class => \Bermuda\App\AppFactory::class,
-                \Bermuda\App\Boot\BootstrapperInterface::class => static function(\Psr\Container\ContainerInterface $container): \Bermuda\App\Boot\Bootstrapper
-                {
+                \Bermuda\App\Boot\BootstrapperInterface::class => static fn(\Psr\Container\ContainerInterface $container): =>
                     return \Bermuda\App\Boot\Bootstrapper::makeOf([
                         new \Bermuda\App\Boot\RouterBootstrapper(),
                         new \Bermuda\App\Boot\PipelineBootstrapper(),
                     ]);
-                },
                 \App\Handler\HomePageHandler::class => \App\Factory\HomePageHandlerFactory::class
            ];
        }
