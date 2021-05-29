@@ -31,7 +31,7 @@ return Config::merge(
         {
             return [
                 \Bermuda\App\AppInterface::class => \Bermuda\App\AppFactory::class,
-                \Bermuda\App\Boot\BootstrapperInterface::class => static function(\Psr\Container\ContainerInterface $container): \Bermuda\App\Boot\Bootstrapper
+                \Bermuda\App\Boot\BootstrapperInterface::class => static function(\Psr\Container\ContainerInterface $container): \Bermuda\App\Boot\Bootstrapper 
                 {
                     return \Bermuda\App\Boot\Bootstrapper::makeOf([
                         new \Bermuda\App\Boot\RouterBootstrapper(),
