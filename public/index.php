@@ -17,7 +17,7 @@ require APP_ROOT . '\vendor\autoload.php';
     $app = Bermuda\App\AppFactory::make($container);
     
     try {
-        $app->boot(); $app->run();
+        $app->boot()->run();
     }
     
     catch(\Throwable $e)
