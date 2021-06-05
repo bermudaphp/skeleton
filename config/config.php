@@ -45,8 +45,10 @@ return Config::merge(
                 },
                 \Psr\Log\LoggerInterface::class => static function(\Psr\Container\ContainerInterface $container)
                 {
-                    return (new \Monolog\Logger('MonologLogger'))->pushHandler(
-                        new \Monolog\Handler\StreamHandler(APP_ROOT . '\logs\app.log')
+                    $is_console = PHP_SAPI == 'cli' || PHP_SAPI == 'cli-server';
+                    
+                    return (new \Monolog\Logger($is_console ? 'console' : 'server'))->pushHandler(
+                        new \Monolog\Handler\StreamHandler(APP_ROOT . '\logs\\' . ($is_console ? 'console.log' : 'server.log'))
                     );
                 },
                 \App\Handler\HomePageHandler::class => \App\Factory\HomePageHandlerFactory::class,
