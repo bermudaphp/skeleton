@@ -45,8 +45,7 @@ return Config::merge(
                 },
                 \Psr\Log\LoggerInterface::class => static function(\Psr\Container\ContainerInterface $container)
                 {
-                    $is_console = PHP_SAPI == 'cli' || PHP_SAPI == 'cli-server';
-                    
+                    $is_console = \Bermuda\is_console_sapi();
                     return (new \Monolog\Logger($is_console ? 'console' : 'server'))->pushHandler(
                         new \Monolog\Handler\StreamHandler(APP_ROOT . '\logs\\' . ($is_console ? 'console.log' : 'server.log'))
                     );
