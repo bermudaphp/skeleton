@@ -37,7 +37,9 @@ return Config::merge(
                         new \Bermuda\App\Boot\RouterBootstrapper(),
                         new \Bermuda\App\Boot\PipelineBootstrapper(),
                         new \Bermuda\App\Boot\ErrorHandlerBootstrapper([
-                            \Bermuda\ErrorHandler\LogErrorListener::class
+                            (new \Bermuda\ErrorHandler\LogErrorListener($container->get(\Psr\Log\LoggerInterface::class)))
+                            ->except(\Bermuda\Router\Exception\RouteNotFoundException::class)
+                            ->except(\Bermuda\Router\Exception\MethodNotAllowedException::class)
                         ])
                     ]);
                 },
