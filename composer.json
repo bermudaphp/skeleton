@@ -19,13 +19,14 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Console\\": "bin/"
+            "Console\\": "bin/",
+            "":""
         },
         "files": [
             "app/functions.php"
         ]
     },
     "scripts": {
-        "pre-package-install": "Installer::install"
+        "pre-install-cmd": "Installer::install"
     }
 }
