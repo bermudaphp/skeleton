@@ -27,6 +27,6 @@
         ]
     },
     "scripts": {
-        "pre-install-cmd": "Installer::install"
+        "post-root-package-install": "Installer::install"
     }
 }
