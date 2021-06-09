@@ -19,7 +19,7 @@ final class Installer
 
     private array $packageRequires;
     private array $composerDefinitions;
-    
+
     public static function install(Event $event)
     {
         $installer = new self($event->getComposer(), $event->getIO());
@@ -37,6 +37,11 @@ final class Installer
 
         $installer->updateRootPackage();
         $installer->writeComposerJson();
+
+        if ($installer->isWin())
+        {
+            @file_put_contents(dirname($installer->composerJson->getPath()) . '\console.cmd', 'php bin\console');
+        }
     }
 
     private function __construct(Composer $composer, IOInterface $io)
@@ -68,5 +73,10 @@ final class Installer
     private function writeComposerJson(): void
     {
         $this->composerJson->write($this->composerDefinitions);
+    }
+
+    private function isWin(): bool
+    {
+        return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
     }
 }
