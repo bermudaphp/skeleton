@@ -10,7 +10,6 @@
         "bermudaphp/app": "^1.0.1",
         "bermudaphp/config": "^1.0",
         "bermudaphp/http": "^1.0",
-        "nyholm/psr7": "^1.4.0",
         "monolog/monolog": "^2.2.0"
     },
     "require-dev": {
