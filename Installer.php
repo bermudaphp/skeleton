@@ -24,9 +24,6 @@ final class Installer
     {
         $installer = new self($event->getComposer(), $event->getIO());
         
-        $found = $installer->composer->getRepositoryManager()
-            ->findPackages('psr/http-message-implementation', '1.0');
-        
         $chooses = ['nyholm/psr7', 'laminas/laminas-diactoros'];
         $packages = [[$chooses[0], '^1.4.0'], [$chooses[1], '^2.6.0']];
         
