@@ -24,7 +24,7 @@ final class Installer
     {
         $installer = new self($event->getComposer(), $event->getIO());
 
-        $result = (int) $installer->io->select('Choose Psr-7 implementation',
+        $result = (int) $installer->io->select('Choose PSR-7 implementation',
             ['nyholm/psr7', 'laminas/laminas-diactoros'], 'nyholm/psr7'
         );
 
