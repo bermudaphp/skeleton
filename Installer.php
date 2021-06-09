@@ -28,25 +28,9 @@ final class Installer
             ->findPackages('psr/http-message-implementation', '1.0');
         
         $chooses = ['nyholm/psr7', 'laminas/laminas-diactoros'];
-        $packages = [['nyholm/psr7', '^1.4.0'], ['laminas/laminas-diactoros', '^2.6.0']];
+        $packages = [[$chooses[0], '^1.4.0'], [$chooses[1], '^2.6.0']];
         
-        foreach ($found as $package)
-        {
-            if ($package->getName() == 'nyholm/psr7' || $package->getName() == 'laminas/laminas-diactoros')
-            {
-                continue;
-            }
-            
-            $chooses[] = $package->getName();
-            $packages[] = [$package->getName(), $package->getVersion()];
-            
-            if (count($chooses) >= 5)
-            {
-                break;
-            }
-        }
-
-        $result = (int) $installer->io->select('Choose Psr-7 implementation', $chooses, 0);
+        $result = (int) $installer->io->select('Choose PSR-7 implementation', $chooses, 0);
         $installer->addPackage($packages[$result][0], $packages[$result][1]);
 
         $installer->updateRootPackage();
