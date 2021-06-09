@@ -38,14 +38,14 @@ final class Installer
         $installer->updateRootPackage();
         $installer->writeComposerJson();
 
-        $projectRoot = dirname($installer->composerJson->getPath());
+        $projectRoot = realpath(dirname($installer->composerJson->getPath()));
 
         if ($installer->isWin())
         {
             @file_put_contents($projectRoot . '\console.cmd', 'php bin\console');
         }
 
-        unlink($projectRoot . 'Installer.php');
+        unlink($projectRoot . '\Installer.php');
     }
 
     private function __construct(Composer $composer, IOInterface $io)
