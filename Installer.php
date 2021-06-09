@@ -23,17 +23,31 @@ final class Installer
     public static function install(Event $event)
     {
         $installer = new self($event->getComposer(), $event->getIO());
-
-        $result = (int) $installer->io->select('Choose PSR-7 implementation',
-            ['nyholm/psr7', 'laminas/laminas-diactoros'], 'nyholm/psr7'
-        );
-
-        switch ($result)
+        
+        $found = $installer->composer->getRepositoryManager()
+            ->findPackages('psr/http-message-implementation', '1.0');
+        
+        $chooses = ['nyholm/psr7', 'laminas/laminas-diactoros'];
+        $packages = [['nyholm/psr7', '^1.4.0'], ['laminas/laminas-diactoros', '^2.6.0']];
+        
+        foreach ($found as $package)
         {
-            case 1 : $installer->addPackage('laminas/laminas-diactoros', '^2.6.0');
+            if ($package->getName() == 'nyholm/psr7' || $package->getName() == 'laminas/laminas-diactoros')
+            {
+                continue;
+            }
+            
+            $chooses[] = $package->getName();
+            $packages[] = [$package->getName(), $package->getVersion()];
+            
+            if (count($chooses) >= 5)
+            {
                 break;
-            default: $installer->addPackage('nyholm/psr7', '^1.4.0');
+            }
         }
+
+        $result = (int) $installer->io->select('Choose Psr-7 implementation', $chooses, 0);
+        $installer->addPackage($packages[$result][0], $packages[$result][1]);
 
         $installer->updateRootPackage();
         $installer->writeComposerJson();
