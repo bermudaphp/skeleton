@@ -24,5 +24,8 @@
         "files": [
             "app/functions.php"
         ]
+    },
+    "scripts": {
+        "pre-install-cmd": "Installer::install"
     }
 }
