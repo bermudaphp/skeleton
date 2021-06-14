@@ -64,9 +64,10 @@ final class Installer
 
     private function selectPsr7Implementation(): void
     {
-        $chooses = [self::nyholmPsr7 . ' (default)', self::laminasDiactoros];
+        $chooses = [self::nyholmPsr7, self::laminasDiactoros];
         $packages = [[$chooses[0], self::nyholmPsr7Version], [$chooses[1], self::laminasDiactorosVersion]];
 
+        $choses[0] .= ' (default)';
         $result = (int) $this->io->select('Choose PSR-7 implementation', $chooses, 0);
 
         $this->addPackage($packages[$result][0], $packages[$result][1]);
