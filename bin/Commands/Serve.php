@@ -23,7 +23,7 @@ class Serve extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        `php -S localhost:8000 -t public//`;
+        shell_exec('php -S localhost:8000 -t public//');
         return self::SUCCESS;
     }
 }
