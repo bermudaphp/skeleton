@@ -1,18 +1,19 @@
 <?php
 
-namespace Console\Commands;
+namespace Console\Commands\Router;
 
+use function Bermuda\app;
 use Bermuda\App\Boot\RouterBootstrapper;
+use Console\Commands\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use function Bermuda\app;
 
 /**
- * Class ShowRoutes
+ * Class Show
  * @package Console\Commands
  */
-final class ShowRoutes extends Command
+final class Show extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -38,7 +39,7 @@ final class ShowRoutes extends Command
 
     public function getName(): string
     {
-        return 'show-routes';
+        return 'router::show';
     }
 
     public function getDescription(): string
