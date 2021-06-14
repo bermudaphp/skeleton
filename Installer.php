@@ -76,6 +76,8 @@ final class Installer
     {
         ($package = $this->composer->getPackage())
             ->setRequires($this->packageRequires);
+        
+        $package->setScripts(['serve' => 'php -S localhost:8000 -t public/']);
 
         $this->composer->setPackage($package);
     }
