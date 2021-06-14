@@ -39,7 +39,7 @@ final class Show extends Command
 
     public function getName(): string
     {
-        return 'router::show';
+        return 'router:show';
     }
 
     public function getDescription(): string
