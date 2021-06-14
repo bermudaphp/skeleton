@@ -38,7 +38,7 @@ final class Installer
 
         if ($installer->isWin())
         {
-            @file_put_contents($projectRoot . '\cli.cmd', '@echo OFF \n php bin\console %*');
+            @file_put_contents($projectRoot . '\cli.cmd', '@echo OFF & php bin\console %*');
         }
 
         unlink($projectRoot . '\Installer.php');
