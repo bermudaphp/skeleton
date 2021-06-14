@@ -5,6 +5,8 @@
         "skeleton",
         "middleware",
         "psr",
+        "bermuda",
+        "pipeline"
         "psr-7",
         "psr-11",
         "psr-15",
