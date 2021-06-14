@@ -27,6 +27,7 @@
         ]
     },
     "scripts": {
-        "post-root-package-install": "Installer::install"
+        "post-root-package-install": "Installer::install",
+        "serve": "php -S localhost:8000 -t public/"
     }
 }
