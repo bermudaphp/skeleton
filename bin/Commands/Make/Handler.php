@@ -45,7 +45,7 @@ final class Handler extends Command
 
     public function getName(): string
     {
-        return 'create-handler';
+        return 'make:handler';
     }
 
     protected function configure()
