@@ -28,14 +28,9 @@ final class Installer
 
     public static function install(Event $event)
     {
-        $installer = new self($event->getComposer(), $event->getIO());
+        ($installer = new self($event->getComposer(), $event->getIO()))
+            ->selectPsr7Implementation();
         
-        $chooses = [self::nyholmPsr7, self::laminasDiactoros];
-        $packages = [[$chooses[0], self::nyholmPsr7Version], [$chooses[1], self::laminasDiactorosVersion]];
-        
-        $result = (int) $installer->io->select('Choose PSR-7 implementation', $chooses, 0);
-        $installer->addPackage($packages[$result][0], $packages[$result][1]);
-
         $installer->updateRootPackage();
         $installer->writeComposerJson();
 
@@ -48,7 +43,7 @@ final class Installer
 
         unlink($projectRoot . '\Installer.php');
     }
-
+    
     private function __construct(Composer $composer, IOInterface $io)
     {
         $this->composer = $composer; $this->io = $io;
@@ -65,6 +60,16 @@ final class Installer
     {
         $this->composerDefinitions['require'][$name] = $version;
         $this->packageRequires[$name] = $this->createPackageLink($name, $version);
+    }
+    
+    private function selectPsr7Implementation(): void
+    {
+        $chooses = [self::nyholmPsr7, self::laminasDiactoros];
+        $packages = [[$chooses[0], self::nyholmPsr7Version], [$chooses[1], self::laminasDiactorosVersion]];
+      
+        $result = (int) $installer->io->select('Choose PSR-7 implementation', $chooses, 0);
+        
+        $installer->addPackage($packages[$result][0], $packages[$result][1]);
     }
 
     private function updateRootPackage(): void
