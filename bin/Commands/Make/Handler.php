@@ -1,8 +1,9 @@
 <?php
 
-namespace Console\Commands;
+namespace Console\Commands\Make;
 
 use Bermuda\String\Str;
+use Console\Commands\Command;
 use Laminas\Code\Generator\ClassGenerator;
 use Laminas\Code\Generator\FileGenerator;
 use Laminas\Code\Generator\MethodGenerator;
@@ -14,10 +15,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class CreateHandler
+ * Class Handler
  * @package Console\Commands
  */
-final class CreateHandler extends Command
+final class Handler extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
