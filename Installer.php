@@ -64,7 +64,7 @@ final class Installer
 
     private function selectPsr7Implementation(): void
     {
-        $chooses = [self::nyholmPsr7, self::laminasDiactoros];
+        $chooses = [self::nyholmPsr7 . ' (default)', self::laminasDiactoros];
         $packages = [[$chooses[0], self::nyholmPsr7Version], [$chooses[1], self::laminasDiactorosVersion]];
 
         $result = (int) $this->io->select('Choose PSR-7 implementation', $chooses, 0);
@@ -76,15 +76,12 @@ final class Installer
     {
         ($package = $this->composer->getPackage())
             ->setRequires($this->packageRequires);
-        
-        $package->setScripts(['serve' => 'php -S localhost:8000 -t public/']);
-
         $this->composer->setPackage($package);
     }
 
     private function writeComposerJson(): void
     {
-        unset($this->composerDefinitions['scripts']);
+        unset($this->composerDefinitions['scripts']['post-root-package-install']);
         $this->composerJson->write($this->composerDefinitions);
     }
 
