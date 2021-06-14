@@ -19,13 +19,19 @@ final class Installer
 
     private array $packageRequires;
     private array $composerDefinitions;
+    
+    private const nyholmPsr7 = 'nyholm/psr7';
+    private const nyholmPsr7Version = '^1.4.0';
+    
+    private const laminasDiactoros = 'laminas/laminas-diactoros';
+    private const laminasDiactorosVersion = '^2.6.0';
 
     public static function install(Event $event)
     {
         $installer = new self($event->getComposer(), $event->getIO());
         
-        $chooses = ['nyholm/psr7', 'laminas/laminas-diactoros'];
-        $packages = [[$chooses[0], '^1.4.0'], [$chooses[1], '^2.6.0']];
+        $chooses = [self::nyholmPsr7, self::laminasDiactoros];
+        $packages = [[$chooses[0], self::nyholmPsr7Version], [$chooses[1], self::laminasDiactorosVersion]];
         
         $result = (int) $installer->io->select('Choose PSR-7 implementation', $chooses, 0);
         $installer->addPackage($packages[$result][0], $packages[$result][1]);
@@ -37,7 +43,7 @@ final class Installer
 
         if ($installer->isWin())
         {
-            @file_put_contents($projectRoot . '\console.cmd', 'php bin\console');
+            @file_put_contents($projectRoot . '\console.cmd', 'php bin\console %*');
         }
 
         unlink($projectRoot . '\Installer.php');
