@@ -6,7 +6,7 @@
         "middleware",
         "psr",
         "bermuda",
-        "pipeline"
+        "pipeline",
         "psr-7",
         "psr-11",
         "psr-15",
