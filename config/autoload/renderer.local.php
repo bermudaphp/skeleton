@@ -1,15 +1,16 @@
 <?php
 
-use Bermuda\Templater\RendererFactory;
+use Bermuda\Templater\EngineFactory;
 
 return [
-    RendererFactory::configKey => [
-        RendererFactory::configExtKey => 'phtml', 
-        RendererFactory::configTemplatesFoldersKey =>
-        [
-            'app' => ($path = APP_ROOT . '\templates\\') . 'app',
-            'errors' => $path . 'errors',
-        ], 
-        RendererFactory::configExtendersKey => ['route' => '\Bermuda\route']
-   ]
+    EngineFactory::configKey => [
+        EngineFactory::configTemplatesDir => APP_ROOT . '\templates',
+        EngineFactory::configExtKey => 'phtml',
+        EngineFactory::configTemplatesFoldersKey => [
+            'app' => APP_ROOT . '\templates\app',
+            'errors' =>  APP_ROOT . '\templates\errors',
+            'dashboard' =>  APP_ROOT . '\templates\dashboard'
+        ],
+        EngineFactory::configExtendersKey => ['route' => '\Bermuda\route']
+    ]
 ];
