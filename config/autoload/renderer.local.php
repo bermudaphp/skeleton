@@ -10,6 +10,6 @@ return [
             'app' => ($path = APP_ROOT . '\templates\\') . 'app',
             'errors' => $path . 'errors',
         ], 
-        RendererFactory::configExtendersKey => ['urlFor' => '\Bermuda\urlFor']
+        RendererFactory::configExtendersKey => ['route' => '\Bermuda\route']
    ]
 ];
