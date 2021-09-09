@@ -13,10 +13,9 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
     return false;
 }
 
-define('APP_ROOT', dirname(__DIR__));
-chdir(APP_ROOT);
+chdir(dirname(__DIR__));
 
-require APP_ROOT . '\vendor\autoload.php';
+require getcwd() . '\vendor\autoload.php';
 
 (static function (ContainerInterface $container): void
 {
@@ -28,4 +27,4 @@ require APP_ROOT . '\vendor\autoload.php';
         $app->handleException($e);
     }
 })
-(require APP_ROOT . '\config\container.php');
+(require getcwd() . '\config\container.php');
