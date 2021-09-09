@@ -1,7 +1,7 @@
 <?php
 
-use Bermuda\Templater\EngineFactory;
 use function Bermuda\App\path;
+use Bermuda\Templater\EngineFactory;
 
 return [
     EngineFactory::configKey => [
