@@ -23,7 +23,7 @@ require APP_ROOT . '\vendor\autoload.php';
     $app = AppFactory::make($container);
     
     try {
-        $app->boot()->run();
+        $app->run();
     } catch(Throwable $e) {
         $app->handleException($e);
     }
