@@ -15,7 +15,7 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
 
 chdir(dirname(__DIR__));
 
-require getcwd() . '\vendor\autoload.php';
+require '..\vendor\autoload.php';
 
 (static function (ContainerInterface $container): void
 {
@@ -27,4 +27,4 @@ require getcwd() . '\vendor\autoload.php';
         $app->handleException($e);
     }
 })
-(require getcwd() . '\config\container.php');
+(require '..\config\container.php');
