@@ -1,16 +1,17 @@
 <?php
 
 use Bermuda\Templater\EngineFactory;
+use function Bermuda\App\path;
 
 return [
     EngineFactory::configKey => [
-        EngineFactory::configTemplatesDir => APP_ROOT . '\templates',
+        EngineFactory::configTemplatesDir => (string) $templates = path('templates'),
         EngineFactory::configExtKey => 'phtml',
         EngineFactory::configTemplatesFoldersKey => [
-            'app' => APP_ROOT . '\templates\app',
-            'errors' =>  APP_ROOT . '\templates\errors',
-            'dashboard' =>  APP_ROOT . '\templates\dashboard'
+            'app' => (string) $templates->append('app'),
+            'errors' =>  (string) $templates->append('errors'),
+            'dashboard' =>  (string) $templates->append('dashboard')
         ],
-        EngineFactory::configExtendersKey => ['route' => '\Bermuda\route']
+        EngineFactory::configExtendersKey => ['route' => '\Bermuda\App\route']
     ]
 ];
