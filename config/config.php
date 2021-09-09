@@ -3,7 +3,22 @@
 declare(strict_types=1);
 
 use Bermuda\Config\Config;
+use Bermuda\App\AppFactory;
+use Bermuda\App\AppInterface;
+use Bermuda\App\Boot\Bootstrapper;
+use Bermuda\App\Boot\BootstrapperInterface;
+use Bermuda\App\Boot\ErrorHandlerBootstrapper;
+use Bermuda\App\Boot\PipelineBootstrapper;
+use Bermuda\App\Boot\RouterBootstrapper;
+use Bermuda\Config\ConfigProvider;
+use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+use Monolog\{Handler\StreamHandler, Logger};
 use Laminas\ConfigAggregator\PhpFileProvider;
+use App\Handler\HomePageHandler;
+use App\Factory\HomePageHandlerFactory;
+
+use function Bermuda\App\{is_console_sapi, path};
 
 Config::$devMode = true;
 Config::$cacheFile = APP_ROOT . '\config\cached-config.php';
@@ -20,7 +35,7 @@ return Config::merge(
     new PhpFileProvider(APP_ROOT  . '/config/development.config.php'),
     
     // App config provider
-    new class extends \Bermuda\Config\ConfigProvider
+    new class extends ConfigProvider
     {
         /**
          * An associative array that maps a service name to a factory class name, or any callable.
@@ -30,27 +45,19 @@ return Config::merge(
         protected function getFactories(): array
         {
             return [
-                \Bermuda\App\AppInterface::class => \Bermuda\App\AppFactory::class,
-                \Bermuda\App\Boot\BootstrapperInterface::class => static function(\Psr\Container\ContainerInterface $container): \Bermuda\App\Boot\Bootstrapper
+                AppInterface::class => AppFactory::class,
+                BootstrapperInterface::class => static function(ContainerInterface $container): Bootstrapper
                 {
-                    return \Bermuda\App\Boot\Bootstrapper::makeOf([
-                        new \Bermuda\App\Boot\RouterBootstrapper(),
-                        new \Bermuda\App\Boot\PipelineBootstrapper(),
-                        new \Bermuda\App\Boot\ErrorHandlerBootstrapper([
-                            (new \Bermuda\ErrorHandler\LogErrorListener($container->get(\Psr\Log\LoggerInterface::class)))
-                            ->except(\Bermuda\Router\Exception\RouteNotFoundException::class)
-                            ->except(\Bermuda\Router\Exception\MethodNotAllowedException::class)
-                        ])
-                    ]);
+                    return Bootstrapper::makeDefault($container);
                 },
-                \Psr\Log\LoggerInterface::class => static function(\Psr\Container\ContainerInterface $container)
+                LoggerInterface::class => static function(ContainerInterface $container)
                 {
-                    $is_console = \Bermuda\is_console_sapi();
-                    return (new \Monolog\Logger($is_console ? 'console' : 'server'))->pushHandler(
-                        new \Monolog\Handler\StreamHandler(APP_ROOT . '\logs\\' . ($is_console ? 'console.log' : 'server.log'))
+                    $is_console = is_console_sapi();
+                    return (new Logger($is_console ? 'console' : 'server'))->pushHandler(
+                        new StreamHandler(path()->append('logs', $is_console ? 'console.log' : 'server.log'))
                     );
                 },
-                \App\Handler\HomePageHandler::class => \App\Factory\HomePageHandlerFactory::class,
+                HomePageHandler::class => HomePageHandlerFactory::class,
            ];
        }
     },
