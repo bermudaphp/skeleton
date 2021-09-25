@@ -2,55 +2,57 @@
 
 use Composer\Composer;
 use Composer\Factory;
-use Composer\Script\Event;
 use Composer\IO\IOInterface;
+use Composer\Json\JsonFile;
 use Composer\Package\Link;
 use Composer\Package\Version\VersionParser;
-use Composer\Json\JsonFile;
+use Composer\Script\Event;
 
 final class Installer
 {
+    private const packages = [
+        'nyholm/psr7',
+        'laminas/laminas-diactoros',
+        'guzzlehttp/psr7',
+        'slim/psr7',
+    ];
     private IOInterface $io;
     private Composer $composer;
     private JsonFile $composerJson;
-
     private array $packageRequires;
     private array $composerDefinitions;
 
-    private const nyholmPsr7 = 'nyholm/psr7';
-    private const nyholmPsr7Version = '^1.4.1';
-
-    private const laminasDiactoros = 'laminas/laminas-diactoros';
-    private const laminasDiactorosVersion = '^2.6.0';
-
-    public static function install(Event $event)
+    private function __construct(Composer $composer, IOInterface $io)
     {
-        ($installer = new self($event->getComposer(), $event->getIO()))
-            ->selectPsr7Implementation();
+        $this->composer = $composer;
+        $this->io = $io;
+        $this->packageRequires = $this->composer->getPackage()->getRequires();
+        $this->composerDefinitions = ($this->composerJson = new JsonFile(Factory::getComposerFile()))->read();
+    }
 
+    public static function install(Event $event): void
+    {
+        $installer = new Installer($event->getComposer(), $event->getIO());
+        
+        $installer->selectPsr7Implementation();
         $installer->updateRootPackage();
         $installer->writeComposerJson();
 
         $projectRoot = realpath(dirname($installer->composerJson->getPath()));
 
-        if ($installer->isWin())
-        {
+        if ($installer->isWin()) {
             @file_put_contents($projectRoot . '\cli.cmd', '@echo OFF & php bin\console %*');
         }
 
         unlink($projectRoot . '\Installer.php');
     }
-
-    private function __construct(Composer $composer, IOInterface $io)
+    
+    private function selectPsr7Implementation(): void
     {
-        $this->composer = $composer; $this->io = $io;
-        $this->packageRequires = $this->composer->getPackage()->getRequires();
-        $this->composerDefinitions = ($this->composerJson = new JsonFile(Factory::getComposerFile()))->read();
-    }
+        $answer = (int)$this->io->select('Select PSR-7 implementation from the list or enter package name. Default: nyholm/psr7', self::packages, 0);
+        $package = $this->composer->getRepositoryManager()->findPackage(self::packages[$answer], '*');
 
-    private function createPackageLink(string $name, string $version): Link
-    {
-        return new Link('__root__', $name, (new VersionParser())->parseConstraints($version), 'requires', $version);
+        $this->addPackage($package->getName(), $package->getVersion());
     }
 
     private function addPackage(string $name, string $version): void
@@ -59,14 +61,9 @@ final class Installer
         $this->packageRequires[$name] = $this->createPackageLink($name, $version);
     }
 
-    private function selectPsr7Implementation(): void
+    private function createPackageLink(string $name, string $version): Link
     {
-        $list = [self::nyholmPsr7, self::laminasDiactoros];
-        $packages = [[$list[0], self::nyholmPsr7Version], [$list[1], self::laminasDiactorosVersion]];
-
-        $result = (int) $this->io->select('Select PSR-7 implementation from the list or enter package name. Default: ' . self::nyholmPsr7, $list, 0);
-
-        $this->addPackage($packages[$result][0], $packages[$result][1]);
+        return new Link('__root__', $name, (new VersionParser())->parseConstraints($version), 'requires');
     }
 
     private function updateRootPackage(): void
