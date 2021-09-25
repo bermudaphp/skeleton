@@ -8,9 +8,6 @@ use Composer\Package\Link;
 use Composer\Package\Version\VersionParser;
 use Composer\Json\JsonFile;
 
-/**
- * Class Installer
- */
 final class Installer
 {
     private IOInterface $io;
