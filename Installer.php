@@ -68,8 +68,7 @@ final class Installer
 
     private function updateRootPackage(): void
     {
-        ($package = $this->composer->getPackage())
-            ->setRequires($this->packageRequires);
+        ($package = $this->composer->getPackage())->setRequires($this->packageRequires);
         $this->composer->setPackage($package);
     }
 
