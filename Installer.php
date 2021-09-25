@@ -18,7 +18,7 @@ final class Installer
     private array $composerDefinitions;
 
     private const nyholmPsr7 = 'nyholm/psr7';
-    private const nyholmPsr7Version = '^1.4.0';
+    private const nyholmPsr7Version = '^1.4.1';
 
     private const laminasDiactoros = 'laminas/laminas-diactoros';
     private const laminasDiactorosVersion = '^2.6.0';
