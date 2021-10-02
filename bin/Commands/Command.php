@@ -3,7 +3,7 @@
 namespace Console\Commands;
 
 use Exception;
-use Bermuda\App\Console\Asker;
+use Bermuda\App\Console\Asker\Asker;
 use Bermuda\App\Console\CommandInterface;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
