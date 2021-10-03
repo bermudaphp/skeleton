@@ -34,7 +34,10 @@
             "Console\\": "bin/",
             "": ""
         },
-        "files": ["app/functions.php"]
+        "files": [
+            "app/functions.php",
+            ".autocomplete.php"
+        ]
     },
     "scripts": {
         "post-root-package-install": "Installer::install",
