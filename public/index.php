@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Throwable;
 use Bermuda\App\AppFactory;
 use Psr\Container\ContainerInterface;
 
