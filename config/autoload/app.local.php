@@ -1,7 +1,16 @@
 <?php
 
+use Bermuda\ErrorHandler\LogErrorListener;
+
 return [
-    'app_url' => '',
-    'app_name' => 'Bermuda',
-    'app_version' => '1.0.0',
+    'app' => [
+        'name' => 'skeleton',
+        'version' => '1.0',
+    ],
+
+    'errors' => [
+        'listeners' => static function () {
+            return [LogErrorListener::class];
+        }
+    ]
 ];
