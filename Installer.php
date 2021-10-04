@@ -7,8 +7,6 @@ use Composer\Json\JsonFile;
 use Composer\Package\Link;
 use Composer\Package\Version\VersionParser;
 use Composer\Script\Event;
-use Bermuda\String\_Class;
-use Bermuda\String\_String;
 
 final class Installer
 {
@@ -39,7 +37,7 @@ final class Installer
 
         $installer->selectPsr7Implementation();
 
-        $answer = $installer->io->askConfirmation('Do you want to install the template engine? (y/n) ', false);
+        $answer = $installer->io->askConfirmation('Do you want to install the template engine ?', false);
 
         if ($answer) {
             $package = $installer->composer->getRepositoryManager()
@@ -66,18 +64,11 @@ final class Installer
     private function writeConfig(string $provider): void
     {
         $contents = file_get_contents('./config/config.php');
-
-        $prefix = sprintf(PHP_EOL . '    new %s(),', $provider);
         
-        require './vendor/bermudaphp/stringy/src/functions.php';
-
-        /**
-         * @var _String $startOfString
-         * @var _String $endOfString
-         */
-        list($startOfString, $endOfString) = _string($contents)->break('Config::merge(');
-        $contents = $startOfString->append($endOfString->prepend($prefix));
-
+        $contents = substr($contents, 0, 
+            $offset = strpos('Config::merge(') + strlen('Config::merge(')
+        ) . PHP_EOL . '    new ' . $provider . '(),' . substr($contents, $offset);
+        
         file_put_contents('./config/config.php', $contents);
     }
 
