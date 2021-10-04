@@ -39,7 +39,7 @@ final class Installer
 
         $installer->selectPsr7Implementation();
 
-        $answer = $installer->io->askConfirmation('Do you want to install the template engine? y/n ', false);
+        $answer = $installer->io->askConfirmation('Do you want to install the template engine? (y/n) ', false);
 
         if ($answer) {
             $package = $installer->composer->getRepositoryManager()
@@ -83,7 +83,7 @@ final class Installer
 
     private function selectPsr7Implementation(): void
     {
-        $answer = (int)$this->io->select('Select PSR-7 implementation from the list or enter package name. Default: nyholm/psr7', self::packages, 0);
+        $answer = (int)$this->io->select('Select PSR-7 implementation from the list. Default: nyholm/psr7', self::packages, 0);
         $package = $this->composer->getRepositoryManager()->findPackage(self::packages[$answer], '*');
 
         $this->addPackage($package->getName(), $package->getVersion());
