@@ -39,7 +39,7 @@ final class Installer
 
         $installer->selectPsr7Implementation();
 
-        $answer = $installer->io->askConfirmation('Do you want to install the template engine? y/n', false);
+        $answer = $installer->io->askConfirmation('Do you want to install the template engine? y/n ', false);
 
         if ($answer) {
             $package = $installer->composer->getRepositoryManager()
@@ -69,7 +69,7 @@ final class Installer
 
         $prefix = sprintf(PHP_EOL . '    new %s(),', $provider);
         
-        require 'vendor/bermudaphp/stringy/src/functions.php';
+        require './vendor/bermudaphp/stringy/src/functions.php';
 
         /**
          * @var _String $startOfString
