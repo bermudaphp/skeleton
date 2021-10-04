@@ -64,11 +64,11 @@ final class Installer
     private function writeConfig(string $provider): void
     {
         $contents = file_get_contents('./config/config.php');
-        
-        $contents = substr($contents, 0, 
-            $offset = strpos('Config::merge(') + strlen('Config::merge(')
+
+        $contents = substr($contents, 0,
+            ($offset = strpos($contents, 'Config::merge(') + strlen('Config::merge('))
         ) . PHP_EOL . '    new ' . $provider . '(),' . substr($contents, $offset);
-        
+
         file_put_contents('./config/config.php', $contents);
     }
 
