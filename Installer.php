@@ -7,6 +7,8 @@ use Composer\Json\JsonFile;
 use Composer\Package\Link;
 use Composer\Package\Version\VersionParser;
 use Composer\Script\Event;
+use Bermuda\String\_Class;
+use Bermuda\String\_String;
 
 final class Installer
 {
@@ -32,9 +34,19 @@ final class Installer
 
     public static function install(Event $event): void
     {
+
         $installer = new Installer($event->getComposer(), $event->getIO());
-        
+
         $installer->selectPsr7Implementation();
+
+        $answer = $installer->io->askConfirmation('Do you want to install the template engine ?', false);
+
+        if ($answer) {
+            $package = $installer->composer->getRepositoryManager()
+                ->findPackage('bermudaphp/templater', '*');
+            $installer->addPackage($package->getName(), $package->getVersion());
+        }
+
         $installer->updateRootPackage();
         $installer->writeComposerJson();
 
@@ -44,9 +56,29 @@ final class Installer
             @file_put_contents($projectRoot . '\cli.cmd', '@echo OFF & php bin\console %*');
         }
 
+        if ($answer) {
+            $installer->writeConfig('Bermuda\Templater\ConfigProvider');
+        }
+
         unlink($projectRoot . '\Installer.php');
     }
-    
+
+    private function writeConfig(string $provider): void
+    {
+        $contents = file_get_contents('./config/config.php');
+
+        $prefix = sprintf(PHP_EOL . '    new %s(),', $provider);
+
+        /**
+         * @var _String $startOfString
+         * @var _String $endOfString
+         */
+        list($startOfString, $endOfString) = _string($contents)->break('Config::merge(');
+        $contents = $startOfString->append($endOfString->prepend($prefix));
+
+        file_put_contents('./config/config.php', $contents);
+    }
+
     private function selectPsr7Implementation(): void
     {
         $answer = (int)$this->io->select('Select PSR-7 implementation from the list or enter package name. Default: nyholm/psr7', self::packages, 0);
