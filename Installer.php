@@ -37,7 +37,7 @@ final class Installer
 
         $installer->selectPsr7Implementation();
 
-        $answer = $installer->io->askConfirmation('Do you want to install the template engine ?', false);
+        $answer = $installer->io->askConfirmation('Do you want to install the template engine ? (y/n) ', false);
 
         if ($answer) {
             $package = $installer->composer->getRepositoryManager()
