@@ -8,8 +8,8 @@ namespace Autocomplete {
     use Psr\Http\Message\UriInterface;
 
     /**
-     * @method ResponseInterface respond(int $code, mixed $content)
-     * @method ResponseInterface redirect(string|UriInterface $location, bool $permanent = false)
+     * @method ResponseInterface respond(int $code, mixed $content, string $contentType = null)
+     * @method ResponseInterface redirect(string|UriInterface $location, int $code = 302)
      * @method string|ResponseInterface route(string $name, array $params = [], bool $redirect = false)
      * @property-read Router $router
      * @property-read Config $config
