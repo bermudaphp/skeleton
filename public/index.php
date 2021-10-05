@@ -18,7 +18,7 @@ require 'vendor\autoload.php';
 
 (static function (ContainerInterface $container): void
 {
-    $app = AppFactory::make($container);
+    $app = AppFactory::create($container);
     
     try {
         $app->run();
