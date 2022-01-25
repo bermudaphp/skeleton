@@ -13,12 +13,12 @@ Config::$devMode = true;
 Config::$cacheFile = '\config\cached-config.php';
 
 return Config::merge(
-    new Bermuda\App\ConfigProvider(),
-    new Bermuda\PSR7ServerFactory\ConfigProvider(),
-    new Bermuda\Router\ConfigProvider(),
-    new Bermuda\Pipeline\ConfigProvider(),
-    new Bermuda\MiddlewareFactory\ConfigProvider(),
-    new Bermuda\ErrorHandler\ConfigProvider(),
+    new Bermuda\App\ConfigProvider,
+    new Bermuda\PSR7ServerFactory\ConfigProvider,
+    new Bermuda\Router\ConfigProvider,
+    new Bermuda\Pipeline\ConfigProvider,
+    new Bermuda\MiddlewareFactory\ConfigProvider,
+    new Bermuda\ErrorHandler\ConfigProvider,
 
     new PhpFileProvider('./config/autoload/{{,*.}global,{,*.}local}.php'),
     new PhpFileProvider('./config/development.config.php'),
