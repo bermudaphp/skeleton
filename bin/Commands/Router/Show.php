@@ -2,6 +2,7 @@
 
 namespace Console\Commands\Router;
 
+use Bermuda\App\AppInterface;
 use Bermuda\App\Boot\RouterBootstrapper;
 use Console\Commands\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -10,21 +11,23 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class Show extends Command
 {
-    
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function __construct(private AppInterface $app)
     {
-        $rows = [];
-        $routes = (($app = app())->get(RouterBootstrapper::class))($app);
+        parent::__construct();
+    }
 
-        foreach($routes->toArray() as $route) {
-            $rows[] = [$route->getName(), $route->getPath(), implode('|', $route->methods())];
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        foreach((new RouterBootstrapper)($this->app)->toArray() as $route) {
+            $rows[] = [$route->getName(), $route->getPath(),
+                implode('|', $route->methods())
+            ];
         }
-
-        ($table = new Table($output))
-            ->setHeaders(['Name', 'Path', 'Methods'])
-            ->setRows($rows ?? []);
-
-        $table->render();
+        
+        (new Table($output))->setHeaders(['Name', 'Path', 'Methods'])
+            ->setRows($rows)
+            ->render();
+        
         return self::SUCCESS;
     }
 
