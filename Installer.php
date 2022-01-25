@@ -32,9 +32,7 @@ final class Installer
 
     public static function install(Event $event): void
     {
-
         $installer = new Installer($event->getComposer(), $event->getIO());
-
         $installer->selectPsr7Implementation();
 
         $answer = $installer->io->askConfirmation('Do you want to install the template engine ? (y/n) ', false);
@@ -64,7 +62,6 @@ final class Installer
     private function writeConfig(string $provider): void
     {
         $contents = file_get_contents('./config/config.php');
-
         $contents = substr($contents, 0,
             ($offset = strpos($contents, 'Config::merge(') + strlen('Config::merge('))
         ) . PHP_EOL . '    new ' . $provider . '(),' . substr($contents, $offset);
