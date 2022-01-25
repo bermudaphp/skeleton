@@ -2,7 +2,6 @@
 
 namespace Console\Commands;
 
-use Exception;
 use Bermuda\App\Console\Asker\Asker;
 use Bermuda\App\Console\CommandInterface;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
@@ -11,6 +10,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class Command extends SymfonyCommand implements CommandInterface
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * @return string
      */
@@ -28,10 +32,8 @@ abstract class Command extends SymfonyCommand implements CommandInterface
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     * @throws Exception
+     * @inerhitDoc
+     * @throws \Exception
      */
     public function __invoke(InputInterface $input, OutputInterface $output): int
     {
