@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-use Bermuda\App\AppFactory;
-use Bermuda\App\AppInterface;
-use Bermuda\App\Boot\Bootstrapper;
-use Bermuda\App\Boot\BootstrapperInterface;
 use Bermuda\Config\Config;
 use Bermuda\Config\ConfigProvider;
+use Bermuda\App\Boot\Bootstrapper;
+use Bermuda\App\Boot\BootstrapperInterface;
 use Laminas\ConfigAggregator\PhpFileProvider;
 use Psr\Container\ContainerInterface;
 
@@ -15,6 +13,7 @@ Config::$devMode = true;
 Config::$cacheFile = '\config\cached-config.php';
 
 return Config::merge(
+    new Bermuda\App\ConfigProvider(),
     new Bermuda\PSR7ServerFactory\ConfigProvider(),
     new Bermuda\Router\ConfigProvider(),
     new Bermuda\Pipeline\ConfigProvider(),
@@ -34,7 +33,6 @@ return Config::merge(
         protected function getFactories(): array
         {
             return [
-                AppInterface::class => AppFactory::class,
                 BootstrapperInterface::class => static function (ContainerInterface $container): Bootstrapper {
                     return Bootstrapper::withDefaults($container);
                 }
