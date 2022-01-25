@@ -18,11 +18,12 @@ chdir(dirname(__DIR__));
 require 'vendor\autoload.php';
 
 (static function (ContainerInterface $container): void {
-    $app = $container->get(AppInterface::class);
+    $app = $container instanceof AppInterface
+        ? $container : $container->get(AppInterface::class);
+    
     try {
         $app->get(BootstrapperInterface::class)
-            ->boot($app);
-        $app->run();
+            ->boot($app); $app->run();
     } catch(Throwable $e) {
         $app->handleException($e);
     }
