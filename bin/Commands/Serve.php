@@ -5,10 +5,6 @@ namespace Console\Commands;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class Serve
- * @package Console\Commands
- */
 class Serve extends Command
 {
     public function getName(): string
