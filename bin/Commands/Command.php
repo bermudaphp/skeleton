@@ -39,9 +39,4 @@ abstract class Command extends SymfonyCommand implements CommandInterface
     {
         return $this->run($input, $output);
     }
-
-    protected function asker(InputInterface $input, OutputInterface $output): Asker
-    {
-        return new Asker($input, $output);
-    }
 }
