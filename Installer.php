@@ -85,7 +85,7 @@ final class Installer
 
     private function createPackageLink(string $name, string $version): Link
     {
-        return new Link('__root__', $name, (new VersionParser())->parseConstraints($version), 'requires', $version);
+        return new Link('__root__', $name, (new VersionParser)->parseConstraints($version), 'requires', $version);
     }
 
     private function updateRootPackage(): void
