@@ -14,7 +14,7 @@ class Serve extends Command
 
     public function getDescription(): string
     {
-        return 'Run developer sever';
+        return 'Run developer server';
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
