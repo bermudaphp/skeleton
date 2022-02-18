@@ -30,20 +30,17 @@ class Push extends Command
         $name = $input->getArgument('provider');
 
         if (!_Class::isValidName($name)) {
-            throw new InvalidArgumentException('Invalid provider name [ %s ]', $name);
+            throw new InvalidArgumentException("Invalid provider name [$name]", $name);
         }
-
-        $prefix = sprintf(PHP_EOL . '    new %s(),', $name);
 
         /**
          * @var _String $startOfString
          * @var _String $endOfString
          */
         list($startOfString, $endOfString) = _string($contents)->break('Config::merge(');
-        $contents = $startOfString->append($endOfString->prepend($prefix));
+        $contents = $startOfString->append($endOfString->prepend(PHP_EOL . "    new $name,"));
 
         file_put_contents('config/config.php', $contents);
-
         $output->writeln(sprintf('Provider: %s successfully registered in config/config.php', $name));
 
         return self::SUCCESS;
