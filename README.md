@@ -67,6 +67,7 @@ return Config::merge(
                             $app->extend(MyFirstMiddleware, static function(MyFirstMiddleware $m, AppInterface $app) {
                               return new MyFirstMiddlewareDecorator($m, $app->get('my-second-dependency'));
                             });
+                            $app->get(MyFirstMiddleware::class) instanceof MyFirstMiddlewareDecorator // true
                         }
                     });
                 },
