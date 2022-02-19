@@ -12,13 +12,9 @@ return (static function(ConfigInterface $config, string $containerClass = null):
     $builder = new DI\ContainerBuilder($containerClass ?? is_cli() ? Console::class : Server::class);
     $config->configureContainer($builder);
     $container = $builder->build();
-
-    if ($container instanceof AppInterface) {
-        $app = $container;
-    }
-
+    
     return [
-        $app ?? $container->get(AppInterface::class),
+        $$container instanceof AppInterface ? $container : $container->get(AppInterface::class),
         $container->get(ErrorHandlerInterface::class),
         $container->get(BootstrapperInterface::class)
     ];
