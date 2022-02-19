@@ -14,7 +14,7 @@ return (static function(ConfigInterface $config, string $containerClass = null):
     $container = $builder->build();
     
     return [
-        $$container instanceof AppInterface ? $container : $container->get(AppInterface::class),
+        $container instanceof AppInterface ? $container : $container->get(AppInterface::class),
         $container->get(ErrorHandlerInterface::class),
         $container->get(BootstrapperInterface::class)
     ];
