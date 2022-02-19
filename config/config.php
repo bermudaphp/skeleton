@@ -33,7 +33,7 @@ return Config::merge(
         protected function getFactories(): array
         {
             return [
-                BootstrapperInterface::class => static function (ContainerInterface $container): Bootstrapper {
+                BootstrapperInterface::class => static function(ContainerInterface $container): Bootstrapper {
                     return Bootstrapper::withDefaults($container);
                 }
             ];
