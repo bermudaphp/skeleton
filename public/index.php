@@ -17,10 +17,10 @@ chdir(dirname(__DIR__));
 
 require 'vendor\autoload.php';
 
-(static function(AppInterface $app, ErrorHandlerInterface $handler, BootstrapperInterface $b): void
+(static function(AppInterface $app, ErrorHandlerInterface $handler, BootstrapperInterface $bootstrapper): void
 {
     try {
-        $b->boot($app)->run();
+        $bootstrapper->boot($app)->run();
     } catch (Throwable $e) {
         $handler->handleException($e);
     }
