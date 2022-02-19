@@ -31,9 +31,7 @@ $app->pipe(\Bermuda\Router\Middleware\DispatchRouteMiddleware::class);
 ```php
 return Config::merge(
     new Bermuda\App\ConfigProvider,
-    new Bermuda\Cycle\ConfigProvider,
     new Bermuda\Flysystem\ConfigProvider,
-    new Bermuda\Cycle\ConfigProvider,
     new Bermuda\PSR7ServerFactory\ConfigProvider,
     new Bermuda\Router\ConfigProvider,
     new Bermuda\Pipeline\ConfigProvider,
