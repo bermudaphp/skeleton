@@ -76,3 +76,27 @@ return Config::merge(
     },
 );
 ```
+Для запуска консольного приложения необходимо создать команду отнаслдовавшись от класса Console\Commands\Command
+или реализовать интерфейс Bermuda\App\Console\CommandInterface, после чего зарегистрировать команду в файле 'config/commands.php'
+Базавая реализация консольного приложения работает поверх пакета <a href="https://github.com/symfony/console">symfony/console</a>
+```php
+class MyCommand extends Command
+{
+    public function getName(): string
+    {
+        return 'myCommand';
+    }
+
+    public function getDescription(): string
+    {
+        return 'MyCommand description';
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        // command logics
+        return self::SUCCESS;
+    }
+}
+$app->pipe(MyCommands::class);
+````
