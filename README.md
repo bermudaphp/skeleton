@@ -100,4 +100,7 @@ class MyCommand extends Command
 }
 $app->pipe(MyCommands::class);
 ````
-После чего команда будет доступна по вызову ```bash php bin/console myCommand ```
+После чего команда будет доступна по вызову 
+```bash
+php bin/console myCommand
+````
