@@ -17,11 +17,11 @@ chdir(dirname(__DIR__));
 
 require 'vendor\autoload.php';
 
-(static function(AppInterface $app, ErrorHandlerInterface $handler, BootstrapperInterface $bootstrapper): void
+(static function(AppInterface $app, BootstrapperInterface $bootstrapper): void
 {
     try {
         $bootstrapper->boot($app)->run();
     } catch (Throwable $e) {
-        $handler->handleException($e);
+        $app->handleException($e);
     }
 })(... require 'config\container.php');
