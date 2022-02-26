@@ -22,7 +22,6 @@ return (static function(array $config, callable $containerFactory = null): array
     return [
         $container instanceof AppInterface ? $container 
             : $container->get(AppInterface::class),
-        $container->get(ErrorHandlerInterface::class),
         $container->get(BootstrapperInterface::class)
     ];
 })(require 'config\config.php');
