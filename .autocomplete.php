@@ -12,7 +12,6 @@ namespace Autocomplete {
      * @method ResponseInterface redirect(string|UriInterface $location, int $code = 302)
      * @method string|ResponseInterface route(string $name, array $params = [], bool $redirect = false)
      * @property-read Router $router
-     * @property-read Config $config
      */
     class App
     {
