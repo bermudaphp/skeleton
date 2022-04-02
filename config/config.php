@@ -34,7 +34,7 @@ return Config::merge(
         {
             return [
                 BootstrapperInterface::class => static function(ContainerInterface $container): Bootstrapper {
-                    return Bootstrapper::withDefaults($container)->add(new UseApp);
+                    return Bootstrapper::withDefaults($container)->add(new App\UseApp);
                 }
             ];
         }
