@@ -14,7 +14,7 @@ return (static function(array $config, callable $containerFactory = null): array
             return $containerFactory($config);
         })();
     } else {
-        $builder = new DI\ContainerBuilder(is_cli() ? Console::class : Server::class);
+        $builder = new DI\ContainerBuilder(\Bermuda\App\is_cli ? Console::class : Server::class);
         (new Elie\PHPDI\Config\Config($config))->configureContainer($builder);
         $container = $builder->build();
     }
