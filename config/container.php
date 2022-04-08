@@ -5,7 +5,6 @@ declare(strict_types = 1);
 use Bermuda\ErrorHandler\ErrorHandlerInterface;
 use Bermuda\App\{AppInterface, Boot\BootstrapperInterface, Server, Console};
 use Psr\Container\ContainerInterface;
-use function Bermuda\App\is_cli;
 
 return (static function(array $config, callable $containerFactory = null): array {
 
