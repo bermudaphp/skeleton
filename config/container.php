@@ -23,4 +23,4 @@ return (static function(array $config, callable $containerFactory = null): array
             : $container->get(AppInterface::class),
         $container->get(BootstrapperInterface::class)
     ];
-})(require 'config\config.php');
+})(require 'config/config.php');
