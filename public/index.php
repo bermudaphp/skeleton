@@ -15,7 +15,7 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
 
 chdir(dirname(__DIR__));
 
-require 'vendor\autoload.php';
+require 'vendor/autoload.php';
 
 (static function(AppInterface $app, BootstrapperInterface $bootstrapper): void
 {
@@ -24,4 +24,4 @@ require 'vendor\autoload.php';
     } catch (Throwable $e) {
         $app->handleException($e);
     }
-})(... require 'config\container.php');
+})(... require 'config/container.php');
