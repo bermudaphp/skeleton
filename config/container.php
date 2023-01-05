@@ -9,7 +9,7 @@ use Psr\Container\ContainerInterface;
 return (static function(array $config, callable $containerFactory = null): array {
 
     if ($containerFactory != null) {
-        $container = (static function() use ($config): ContainerInterface {
+        $container = (static function() use ($containerFactory, $config): ContainerInterface {
             return $containerFactory($config);
         })();
     } else {
