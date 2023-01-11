@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Bermuda\Clock\Clock;
 use Bermuda\Config\Config;
 use Bermuda\Config\ConfigProvider;
 use Bermuda\App\Boot\Bootstrapper;
@@ -10,7 +11,7 @@ use Laminas\ConfigAggregator\PhpFileProvider;
 use Psr\Container\ContainerInterface;
 
 Config::$devMode = true;
-Config::$cacheFile = '/config/cached-config.php';
+Config::$cacheFile = '/config/cache/config.php';
 
 return Config::merge(
     new Bermuda\App\ConfigProvider,
@@ -34,8 +35,16 @@ return Config::merge(
         {
             return [
                 BootstrapperInterface::class => static function(ContainerInterface $container): Bootstrapper {
-                    return Bootstrapper::withDefaults($container)->add(new App\UseApp);
-                }
+                    return Bootstrapper::withDefaults($container)->add(
+                        new class implements BootstrapperInterface {
+                            public function boot(AppInterface $app): AppInterface
+                            {
+                                Clock::timeZone(date_default_timezone_get());
+                                return $app;
+                            }
+                        }
+                    );
+                },
             ];
         }
     },
