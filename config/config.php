@@ -12,7 +12,7 @@ use Laminas\ConfigAggregator\PhpFileProvider;
 use Psr\Container\ContainerInterface;
 
 Config::$devMode = true;
-Config::$cacheFile = '/config/cache/config.php';
+Config::$cacheFile = __DIR__ . '\cache\config.php';
 
 return Config::merge(
     new Bermuda\App\ConfigProvider,
