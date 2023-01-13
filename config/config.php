@@ -14,6 +14,10 @@ use Psr\Container\ContainerInterface;
 Config::$devMode = true;
 Config::$cacheFile = __DIR__ . '\cache\config.php';
 
+if (!Config::$devMode && Config::$cacheFile) {
+    return require_once Config::$cacheFile;
+}
+
 return Config::merge(
     new Bermuda\App\ConfigProvider,
     new Bermuda\PSR7ServerFactory\ConfigProvider,
