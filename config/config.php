@@ -44,7 +44,10 @@ return Config::merge(
                         new class implements BootstrapperInterface {
                             public function boot(AppInterface $app): AppInterface
                             {
-                                Clock::timeZone(date_default_timezone_get());
+                                Clock::timeZone($app->config[Config::app_timezone] 
+                                    ?? date_default_timezone_get()
+                                );
+                                
                                 return $app;
                             }
                         }
