@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Bermuda\Clock\Clock;
 use Bermuda\Config\Config;
 use Bermuda\Config\ConfigProvider;
+use Bermuda\App\AppInterface;
 use Bermuda\App\Boot\Bootstrapper;
 use Bermuda\App\Boot\BootstrapperInterface;
 use Laminas\ConfigAggregator\PhpFileProvider;
