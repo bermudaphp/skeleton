@@ -17,8 +17,8 @@ return (static function(array $config, callable $containerFactory = null): array
         if (!Bermuda\Config\Config::$devMode) {
             $builder->enableCompilation(__DIR__ . '\cache', Bermuda\App\is_cli
                 ? 'CompiledConsole' : 'CompiledServer',
-                Bermuda\App\is_cli ? Bermuda\App\CompiledConsole::class
-                    : Bermuda\App\CompiledServer::class
+                Bermuda\App\is_cli ? Bermuda\App\Compile\CompiledConsole::class
+                    : Bermuda\App\Compile\CompiledServer::class
             );
         }
 
