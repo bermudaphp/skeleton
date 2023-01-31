@@ -43,32 +43,34 @@ try {
         require_once $template;
         return ob_get_clean();
     };
+    $renderException = static function() use ($now, $e): string {
+        return sprintf(
+                '[%s][Exception: %s, File: %s, Line: %s, Message: %s, Code: %s]',
+                $now->format('H:i:s p'), $e::class,
+                $e->getFile(), $e->getLine(),
+                $e->getMessage(), $e->getCode()
+            ) . PHP_EOL ;
+    };
 
     if (!file_exists($logFile) && is_writable($logDir)) {
         write:
-        $content = sprintf(
-            '[%s] Exception: %s, File: %s, Line: %s, Message: %s, Code: %s;',
-            $now->format('H:i:s p'),
-            $e::class,
-            $e->getFile(),
-            $e->getLine(),
-            $e->getMessage(),
-            $e->getCode()
-        ) . PHP_EOL ;
-
-        file_put_contents($logFile, $content, FILE_APPEND);
+        file_put_contents($logFile, $renderException(), FILE_APPEND);
     } elseif (!is_writable($logFile) && chmod($logFile, 0600)) {
         goto write;
     } else {
         if (!chmod($logDir, 0600)) {
             http_response_code(500);
-            exit($render('template/error.phtml','The application ended with an error'));
+            $output = PHP_SAPI === 'cli' ? $renderException()
+                : $render('template/error.phtml','The application ended with an error');
+            exit($output);
         }
 
         goto write;
     }
 
     http_response_code(500);
-    exit($render('template/error.phtml', 'The application ended with an error. For detailed information about the error check the log file'));
+    $output = PHP_SAPI === 'cli' ? $renderException()
+        : $render('template/error.phtml','The application ended with an error');
+    exit($output);
 }
 
