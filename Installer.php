@@ -55,6 +55,9 @@ final class Installer
         if ($answer) {
             $installer->writeConfig('Bermuda\Templater\ConfigProvider');
         }
+        
+        mkdir("$projectRoot\logs", 0600);
+        mkdir("$projectRoot\config\cache", 0600);
 
         unlink($projectRoot . '\Installer.php');
     }
