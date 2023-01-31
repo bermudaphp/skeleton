@@ -31,7 +31,7 @@ try {
         } catch (Throwable $e) {
             $app->handleException($e);
         }
-    })(... require 'configd\container.php');
+    })(... require 'config\container.php');
 
 } catch (Throwable $e) {
 
