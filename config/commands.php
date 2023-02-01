@@ -8,4 +8,5 @@ use Bermuda\App\AppInterface;
 $app->pipe(Console\Commands\Serve::class);
 $app->pipe(Console\Commands\Router\Show::class);
 $app->pipe(Console\Commands\Provider\Push::class);
+$app->pipe(Console\Commands\Make\MakeEndpoint::class);
 
