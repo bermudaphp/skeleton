@@ -49,7 +49,7 @@ final class Installer
         $projectRoot = realpath(dirname($installer->composerJson->getPath()));
 
         if ($installer->isWin()) {
-            @file_put_contents($projectRoot . '\cli.cmd', '@echo OFF & php bin\console %*');
+            @file_put_contents($projectRoot . '\console.cmd', '@echo OFF & php bin\console %*');
         }
 
         if ($answer) {
