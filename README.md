@@ -104,3 +104,8 @@ $app->pipe(MyCommands::class);
 ```bash
 php bin/console myCommand
 ````
+или
+```bash
+console myCommand
+````
+Если вы используете Windows
