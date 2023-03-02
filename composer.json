@@ -20,7 +20,7 @@
         "php": "^8.1",
         "elie29/zend-phpdi-config": "^8.0",
         "laminas/laminas-config-aggregator": "^1.3",
-        "bermudaphp/app": "^2.1.2",
+        "bermudaphp/app": "^1.0",
         "bermudaphp/config": "^1.1.3",
         "bermudaphp/http": "^1.0.1"
     },
