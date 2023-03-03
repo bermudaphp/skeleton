@@ -1,12 +1,14 @@
 <?php
 
+use Bermuda\HTTP\ConfigProvider;
 use Bermuda\Router\Middleware\RouteMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
 
 return [
-    'cors' => [
+    ConfigProvider::corsKey => [
         'origin' => [
-            '*'
+            'http://localhost:5173',
+            'https://shopen.io',
         ],
         'methods' => static function(): callable {
             return function(ServerRequestInterface $request): array {
