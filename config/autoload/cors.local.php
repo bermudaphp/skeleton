@@ -7,8 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 return [
     ConfigProvider::corsKey => [
         'origin' => [
-            'http://localhost:5173',
-            'https://shopen.io',
+            '*'
         ],
         'methods' => static function(): callable {
             return function(ServerRequestInterface $request): array {
