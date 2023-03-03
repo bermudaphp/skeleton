@@ -29,6 +29,6 @@ try {
     })(... require 'config\container.php');
 
 } catch (Throwable $e) {
-    (new ErrorHandler)->handle($e);
+    (new ErrorHandler())->handle($e);
 }
 
