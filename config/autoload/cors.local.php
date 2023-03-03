@@ -6,9 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 return [
     ConfigProvider::corsKey => [
-        'origin' => [
-            '*'
-        ],
+        'origin' => ['*'],
         'methods' => static function(): callable {
             return function(ServerRequestInterface $request): array {
                 return $request->getAttribute(RouteMiddleware::class)->methods();
