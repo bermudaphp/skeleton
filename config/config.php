@@ -20,6 +20,7 @@ if (!Config::$devMode && Config::$cacheFile) {
 
 return Config::merge(
     new Bermuda\App\ConfigProvider,
+    new Bermuda\HTTP\ConfigProvider,
     new Bermuda\PSR7ServerFactory\ConfigProvider,
     new Bermuda\Router\ConfigProvider,
     new Bermuda\Pipeline\ConfigProvider,
