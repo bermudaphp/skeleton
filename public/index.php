@@ -19,7 +19,6 @@ try {
     chdir(dirname(__DIR__));
 
     require 'vendor\autoload.php';
-
     (static function(AppInterface $app, BootstrapperInterface $bootstrapper): void {
         try {
             $bootstrapper->boot($app)->run();
