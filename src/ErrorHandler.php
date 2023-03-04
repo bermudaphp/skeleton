@@ -1,5 +1,7 @@
 <?php
 
+use Bermuda\ErrorHandler\Renderer\WhoopsRenderer;
+
 final class ErrorHandler
 {
     public function __construct(
@@ -10,11 +12,12 @@ final class ErrorHandler
         if (!$this->template) $this->template = dirname(__DIR__) . '/public/template/error.phtml';
     }
 
-    /***
+    /**
      * @param Throwable $e
+     * @param bool $devMode
      * @return never
      */
-    public function handle(\Throwable $e): never
+    public function handle(\Throwable $e, bool $devMode = true): never
     {
         $logFile = $this->logDir . '\\' . ($now = new \DateTime())->format('Y-m-d') . '.log';
 
@@ -27,7 +30,7 @@ final class ErrorHandler
             if (!chmod($this->logDir, 0600)) {
                 http_response_code(500);
                 $output = PHP_SAPI === 'cli' ? $this->renderException($e, $now->format('H:i:s p'))
-                    : $this->renderTemplate();
+                    : $this->renderTemplate($e, $devMode);
                 exit($output);
             }
 
@@ -36,7 +39,7 @@ final class ErrorHandler
 
         http_response_code(500);
         $output = PHP_SAPI === 'cli' ? $this->renderException($e, $now->format('H:i:s p'))
-            : $this->renderTemplate();
+            : $this->renderTemplate($e, $devMode);
 
         exit($output);
     }
@@ -51,8 +54,9 @@ final class ErrorHandler
             ) . PHP_EOL;
     }
 
-    private function renderTemplate(): string
+    private function renderTemplate(Throwable $e, bool $devMode): string
     {
+        if ($devMode) return (new WhoopsRenderer())->renderException($e);
         extract(['msg' => 'The application ended with an error']);
         ob_start();
         require_once $this->template;
