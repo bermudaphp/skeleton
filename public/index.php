@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Bermuda\Config\Config;
 use Bermuda\App\AppInterface;
 use Bermuda\App\Boot\BootstrapperInterface;
 
@@ -19,7 +20,9 @@ try {
     chdir(dirname(__DIR__));
 
     require 'vendor\autoload.php';
-    (static function(AppInterface $app, BootstrapperInterface $bootstrapper): void {
+
+    (static function(AppInterface $app, BootstrapperInterface $bootstrapper): void
+    {
         try {
             $bootstrapper->boot($app)->run();
         } catch (Throwable $e) {
@@ -28,6 +31,6 @@ try {
     })(... require 'config\container.php');
 
 } catch (Throwable $e) {
-    (new ErrorHandler())->handle($e);
+    (new ErrorHandler())->handle($e, Config::$devMode);
 }
 
