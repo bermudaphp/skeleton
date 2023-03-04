@@ -46,16 +46,31 @@ return Config::merge(
                         new class implements BootstrapperInterface {
                             public function boot(AppInterface $app): AppInterface
                             {
-                                Clock::timeZone($app->config[Config::app_timezone] 
-                                    ?? date_default_timezone_get()
-                                );
-                                
+                                if (isset($app->config[ConfigProvider::bootstrap])) {
+                                    foreach ($app->config[ConfigProvider::bootstrap] as $callback) {
+                                        $callback($app);
+                                    }
+                                }
+
                                 return $app;
                             }
                         }
                     );
                 },
             ];
+        }
+
+        protected function getConfig(): array
+        {
+            return [self::bootstrap => [
+                static function(AppInterface $app) {
+                    $timezone = $app->config[Config::app_timezone]
+                        ?? date_default_timezone_get();
+
+                    Clock::timeZone(new DateTimeZone($timezone));
+                    date_default_timezone_set($timezone);
+                }
+            ]];
         }
     },
 );
