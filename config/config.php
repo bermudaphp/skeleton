@@ -8,14 +8,14 @@ use Bermuda\Config\ConfigProvider;
 use Bermuda\App\AppInterface;
 use Bermuda\App\Boot\Bootstrapper;
 use Bermuda\App\Boot\BootstrapperInterface;
-use Laminas\ConfigAggregator\PhpFileProvider;
+use Bermuda\Config\PhpFileProvider;
 use Psr\Container\ContainerInterface;
 
 Config::$devMode = true;
 Config::$cacheFile = __DIR__ . '\cache\config.php';
 
 if (!Config::$devMode && Config::$cacheFile) {
-    return require_once Config::$cacheFile;
+    return Config::fromCache(Config::$cacheFile);
 }
 
 return Config::merge(
