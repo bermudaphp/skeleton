@@ -2,14 +2,13 @@
 
 namespace Console\Commands\Provider;
 
-use Bermuda\String\_Class;
-use Bermuda\String\_String;
+use Bermuda\Stdlib\StrWrp;
+use Bermuda\Stdlib\ClsHelper;
 use Console\Commands\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use function Bermuda\String\_string;
 
 class Push extends Command
 {
@@ -29,15 +28,11 @@ class Push extends Command
 
         $name = $input->getArgument('provider');
 
-        if (!_Class::isValidName($name)) {
+        if (!ClsHelper::isValidName($name)) {
             throw new InvalidArgumentException("Invalid provider name [$name]", $name);
         }
-
-        /**
-         * @var _String $startOfString
-         * @var _String $endOfString
-         */
-        list($startOfString, $endOfString) = _string($contents)->break('Config::merge(');
+        
+        list($startOfString, $endOfString) = (new StrWrp($contents))->break('Config::merge(');
         $contents = $startOfString->append($endOfString->prepend(PHP_EOL . "    new $name,"));
 
         file_put_contents('config/config.php', $contents);
