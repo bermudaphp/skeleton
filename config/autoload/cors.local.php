@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 return [
     'origin' => ['*'],
-    'methods' => static fn(ServerRequestInterface $request) => $request->getAttribute(RouteMiddleware::class)->methods();
+    'methods' => static fn(ServerRequestInterface $request) => $request->getAttribute(RouteMiddleware::class)->methods(),
     'credentials' => true,
     'headers.expose' => ['x-user-id'],
     'headers.allow' => [
