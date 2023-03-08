@@ -7,7 +7,6 @@ use Composer\Json\JsonFile;
 use Composer\Package\Link;
 use Composer\Package\Version\VersionParser;
 use Composer\Script\Event;
-use Webimpress\SafeWriter\FileWriter;
 
 final class Installer
 {
@@ -47,14 +46,14 @@ final class Installer
         $installer->updateRootPackage();
         $installer->writeComposerJson();
 
-        $projectRoot = getcwd(); //realpath(dirname($installer->composerJson->getPath()));
+        $projectRoot = realpath(dirname($installer->composerJson->getPath()));
 
         if ($installer->isWin()) {
-            FileWriter::writeFile($projectRoot . '\console.cmd', '@echo OFF & php bin\console %*');
+            @file_put_contents($projectRoot . '\console.cmd', '@echo OFF & php bin\console %*');
         }
 
         if ($answer) {
-            $installer->writeConfig('Bermuda\Templater\ConfigProvider');
+            $installer->writeConfig($projectRoot, 'Bermuda\Templater\ConfigProvider');
         }
 
         mkdir("$projectRoot\logs", 0600);
@@ -63,14 +62,14 @@ final class Installer
         unlink(__FILE__);
     }
 
-    private function writeConfig(string $provider): void
+    private function writeConfig(string $root, string $provider): void
     {
-        $contents = file_get_contents(getcwd() . '/config/config.php');
+        $contents = file_get_contents("$root/config/config.php");
         $contents = substr($contents, 0,
                 ($offset = strpos($contents, 'Config::merge(') + strlen('Config::merge('))
             ) . PHP_EOL . '    new ' . $provider . '(),' . substr($contents, $offset);
 
-        FileWriter::writeFile(getcwd() . '/config/config.php', $contents);
+        @file_put_contents("$root/config/config.php", $contents);
     }
 
     private function selectPsr7Implementation(): void
