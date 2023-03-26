@@ -63,13 +63,13 @@ return Config::merge(
         protected function getConfig(): array
         {
             return [
-                self::bootstrap => static function(AppInterface $app) {
+                self::bootstrap => callback(static function(AppInterface $app) {
                     $timezone = $app->config[Config::app_timezone]
                         ?? date_default_timezone_get();
 
                     Clock::timeZone(new DateTimeZone($timezone));
                     date_default_timezone_set($timezone);
-                }
+                })
             ];
         }
     },
