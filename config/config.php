@@ -10,6 +10,7 @@ use Bermuda\App\Boot\Bootstrapper;
 use Bermuda\App\Boot\BootstrapperInterface;
 use Bermuda\Config\PhpFileProvider;
 use Psr\Container\ContainerInterface;
+use function Bermuda\Config\callback;
 
 Config::$devMode = true;
 Config::$cacheFile = __DIR__ . '\cache\config.php';
