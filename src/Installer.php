@@ -82,7 +82,7 @@ final class Installer
 
     private function addPackage(string $name, string $version): void
     {
-        $this->composerDefinitions['require'][$name] = $version;
+        $this->composerDefinitions['require'][$name] = "^$version";
         $this->packageRequires[$name] = $this->createPackageLink($name, $version);
     }
 
