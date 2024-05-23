@@ -17,8 +17,8 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^8.1",
-        "elie29/zend-phpdi-config": "^8.1.1",
+        "php": "^8.3",
+        "elie29/zend-phpdi-config": "^9.0.1",
         "laminas/laminas-config-aggregator": "^1.15",
         "bermudaphp/app": "^2.0",
         "bermudaphp/stringy": "^1.0",
