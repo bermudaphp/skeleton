@@ -18,16 +18,19 @@ final class Show extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        foreach((new RouterBootstrapper)($this->app)->toArray() as $route) {
-            $rows[] = [$route->getName(), $route->getPath(),
-                implode('|', $route->methods())
+        /**
+         * @var RouteRecord $route
+         */
+        foreach((new RouterBootstrapper)($this->app) as $route) {
+            $rows[] = [$route->name, $route->path,
+                implode('|', $route->methods)
             ];
         }
-        
+
         (new Table($output))->setHeaders(['Name', 'Path', 'Methods'])
             ->setRows($rows)
             ->render();
-        
+
         return self::SUCCESS;
     }
 
