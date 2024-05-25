@@ -17,7 +17,7 @@ class Serve extends Command
         return 'Run developer server';
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         shell_exec('php -S localhost:8000 -t public/');
         return self::SUCCESS;
