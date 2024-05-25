@@ -8,7 +8,7 @@ use function Bermuda\Config\callback;
 return [
     'origin' => ['*'],
     'methods' => callback(function(ServerRequestInterface $request): array {
-        return $request->getAttribute(RouteMiddleware::class)->methods();
+        return $request->getAttribute(RouteMiddleware::class)->route->methods;
     }),
     'credentials' => true,
     'headers.expose' => ['x-user-id'],
