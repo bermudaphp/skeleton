@@ -22,7 +22,7 @@ class Push extends Command
         $this->addArgument('provider', InputArgument::REQUIRED);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $contents = file_get_contents('config/config.php');
 
