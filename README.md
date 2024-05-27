@@ -12,9 +12,11 @@ Cкрипт установки предложит выбрать реализа�
 Зарегистрируйте машруты в файле 'config/routes.php'.
 Описание интерфейса роутера можно найти <a href="https://github.com/bermudaphp/router">здесь.</a>
 ```php
-$routes->get('hello.action', '/hello/{name}', static function(string $name) use ($app): ResponseInterface {
-    return $app->responde(200, 'Hello, ' . $name);
-});
+$routes->addRoute(
+    RouteRecord::get('hello.action', '/hello/{name}', static function(string $name) use ($app): ResponseInterface {
+        return $app->responde(200, 'Hello, ' . $name);
+    })
+);
 ````
 
 Зарегистрируйте глобальные middleware в файле 'config/pipeline.php'.
