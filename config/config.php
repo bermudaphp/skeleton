@@ -2,15 +2,12 @@
 
 declare(strict_types=1);
 
-use Bermuda\Clock\Clock;
+use Bermuda\App\Boot\Bootable;
+use Bermuda\App\Boot\BootableCollector;
+use Bermuda\Config\AttributeProvider;
 use Bermuda\Config\Config;
 use Bermuda\Config\ConfigProvider;
-use Bermuda\App\AppInterface;
-use Bermuda\App\Boot\Bootstrapper;
-use Bermuda\App\Boot\BootstrapperInterface;
 use Bermuda\Config\PhpFileProvider;
-use Psr\Container\ContainerInterface;
-use function Bermuda\Config\callback;
 
 Config::$devMode = true;
 Config::$cacheFile = __DIR__ . '\cache\config.php';
@@ -31,6 +28,7 @@ return Config::merge(
 
     new PhpFileProvider('./config/autoload/{{,*.}global,{,*.}local}.php'),
     new PhpFileProvider('./config/development.config.php'),
+    new AttributeProvider('./src'),
 
     // App config provider
     new class extends ConfigProvider {
@@ -42,36 +40,13 @@ return Config::merge(
         protected function getFactories(): array
         {
             return [
-                BootstrapperInterface::class => static function(ContainerInterface $container): Bootstrapper {
-                    return Bootstrapper::withDefaults($container)->add(
-                        new class implements BootstrapperInterface {
-                            public function boot(AppInterface $app): AppInterface
-                            {
-                                if (isset($app->config[ConfigProvider::bootstrap])) {
-                                    foreach ($app->config[ConfigProvider::bootstrap] as $callback) {
-                                        $callback($app);
-                                    }
-                                }
-
-                                return $app;
-                            }
-                        }
-                    );
-                },
+                Bootable::class => [BootableCollector::class, 'withDefaults']
             ];
         }
 
-        protected function getConfig(): array
+        protected function getInvokables(): array
         {
-            return [
-                self::bootstrap => callback(static function(AppInterface $app) {
-                    $timezone = $app->config[Config::app_timezone]
-                        ?? date_default_timezone_get();
-
-                    Clock::timeZone(new DateTimeZone($timezone));
-                    date_default_timezone_set($timezone);
-                })
-            ];
+            return [\Console\CreateCommand::class, \Console\CreateModule::class];
         }
     },
 );
