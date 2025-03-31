@@ -1,6 +1,6 @@
 <?php
 
-namespace Console\Create;
+namespace Console;
 
 use Bermuda\App\Console\AsCommand;
 use Bermuda\App\Console\SymfonyCommand;
