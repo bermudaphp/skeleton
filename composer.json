@@ -17,13 +17,14 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^8.3",
-        "elie29/zend-phpdi-config": "^9.0.1",
-        "laminas/laminas-config-aggregator": "^1.15",
-        "bermudaphp/app": "^2.0",
-        "bermudaphp/stringy": "^1.0",
-        "bermudaphp/config": "^1.3",
-        "bermudaphp/http": "^1.0.1",
+        "php": "^8.4",
+        "elie29/zend-phpdi-config": "^9.0.2",
+        "laminas/laminas-config-aggregator": "^1.18",
+        "bermudaphp/app": "^3.0.0",
+        "bermudaphp/stringy": "^1.0.2",
+        "bermudaphp/config": "^1.4",
+        "bermudaphp/http": "^1.0.2",
+        "bermudaphp/codetemplate": "^1.0",
         "webimpress/safe-writer": "^2.2.0"
     },
     "require-dev": {
