@@ -3,11 +3,10 @@
 use Bermuda\HTTP\ConfigProvider;
 use Bermuda\Router\Middleware\RouteMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
-use function Bermuda\Config\callback;
 
 return [
     'origin' => ['*'],
-    'methods' => callback(function(ServerRequestInterface $request): array {
+    'methods' => fn() => function(ServerRequestInterface $request): array {
         return $request->getAttribute(RouteMiddleware::class)->route->methods;
     }),
     'credentials' => true,
