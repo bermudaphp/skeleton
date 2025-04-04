@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 use Bermuda\App\Boot\Finder;
 use Bermuda\App\Listeners\RegisterRouteListener;
-use Bermuda\App\Boot\Bootable;
-use Bermuda\App\Boot\BootableCollector;
 use Bermuda\Config\AttributeProvider;
 use Bermuda\Config\Config;
 use Bermuda\Config\ConfigProvider;
@@ -22,6 +20,7 @@ return Config::merge(
     new Bermuda\Pipeline\ConfigProvider,
     new Bermuda\MiddlewareFactory\ConfigProvider,
     new Bermuda\ErrorHandler\ConfigProvider,
+    new Bermuda\ClassFinder\ConfigProvider,
 
     new PhpFileProvider('./config/autoload/{{,*.}global,{,*.}local}.php'),
     new PhpFileProvider('./config/development.config.php'),
@@ -31,7 +30,7 @@ return Config::merge(
      new class extends ConfigProvider {
         protected function getInvokables(): array
         {
-            return [\Console\create\CreateCommand::class];
+            return [\Console\CreateCommand::class];
         }
 
         protected function getConfig(): array
