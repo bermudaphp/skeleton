@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Bermuda\App\Boot\Finder;
+use Bermuda\App\Listeners\RegisterRouteListener;
 use Bermuda\App\Boot\Bootable;
 use Bermuda\App\Boot\BootableCollector;
 use Bermuda\Config\AttributeProvider;
@@ -10,11 +12,6 @@ use Bermuda\Config\ConfigProvider;
 use Bermuda\Config\PhpFileProvider;
 
 Config::$devMode = true;
-Config::$cacheFile = __DIR__ . '\cache\config.php';
-
-if (!Config::$devMode && Config::$cacheFile) {
-    return Config::fromCache(Config::$cacheFile);
-}
 
 return Config::merge(
     new Bermuda\App\ConfigProvider,
@@ -31,22 +28,20 @@ return Config::merge(
     new AttributeProvider('./src'),
 
     // App config provider
-    new class extends ConfigProvider {
-        /**
-         * An associative array that maps a service name to a factory class name, or any callable.
-         * Factory classes must be instantiable without arguments, and callable once instantiated (i.e., implement the __invoke() method).
-         * @return array
-         */
-        protected function getFactories(): array
-        {
-            return [
-                Bootable::class => [BootableCollector::class, 'withDefaults']
-            ];
-        }
-
+     new class extends ConfigProvider {
         protected function getInvokables(): array
         {
-            return [\Console\CreateCommand::class, \Console\CreateModule::class];
+            return [\Console\create\CreateCommand::class];
+        }
+
+        protected function getConfig(): array
+        {
+            return [
+                Bermuda\ClassFinder\ConfigProvider::CONFIG_KEY_LISTENERS => [
+                    RegisterRouteListener::class,
+                ],
+                Finder::CONFIG_KEY_DIRS => [getcwd().'/src'],
+            ];
         }
     },
 );
