@@ -24,6 +24,7 @@ return Config::merge(
 
     new PhpFileProvider('./config/autoload/{{,*.}global,{,*.}local}.php'),
     new PhpFileProvider('./config/development.config.php'),
+    
     new AttributeProvider('./src'),
 
     // App config provider
